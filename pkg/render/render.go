@@ -12,6 +12,7 @@ import (
 var functions = template.FuncMap{}
 
 func Template(w http.ResponseWriter, tmpl string) {
+	// Get the template cache from the app config
 
 	tc, err := CreateTemplateCache()
 	if err != nil {
