@@ -5,18 +5,28 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"meisa_xyz/pkg/config"
 	"net/http"
 	"path/filepath"
 )
 
 var functions = template.FuncMap{}
 
-func Template(w http.ResponseWriter, tmpl string) {
-	// Get the template cache from the app config
+var app *config.AppConfig
 
-	tc, err := CreateTemplateCache()
-	if err != nil {
-		log.Fatal(err)
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
+func Template(w http.ResponseWriter, tmpl string) {
+
+	var tc map[string]*template.Template
+
+	if app.UseCache {
+		// Get the template cache from the app config
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
 	}
 
 	t, ok := tc[tmpl]
@@ -28,7 +38,7 @@ func Template(w http.ResponseWriter, tmpl string) {
 
 	_ = t.Execute(buf, nil)
 
-	_, err = buf.WriteTo(w)
+	_, err := buf.WriteTo(w)
 	if err != nil {
 		fmt.Println("Error writing template to browser:", err)
 	}
