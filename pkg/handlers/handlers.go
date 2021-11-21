@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"meisa_xyz/pkg/config"
+	"meisa_xyz/pkg/models"
 	"meisa_xyz/pkg/render"
 	"net/http"
 )
@@ -27,9 +28,16 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, _ *http.Request) {
-	render.Template(w, "home.page.tmpl")
+	render.Template(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) About(w http.ResponseWriter, _ *http.Request) {
-	render.Template(w, "about.page.tmpl")
+	// perform some logic
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again."
+
+	// send the data to the template
+	render.Template(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }

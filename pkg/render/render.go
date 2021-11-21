@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"meisa_xyz/pkg/config"
+	"meisa_xyz/pkg/models"
 	"net/http"
 	"path/filepath"
 )
@@ -18,29 +19,36 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func Template(w http.ResponseWriter, tmpl string) {
+func AddDefaultData(data *models.TemplateData) *models.TemplateData {
 
-	var tc map[string]*template.Template
+	return data
+}
+
+func Template(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
+
+	var templateCache map[string]*template.Template
 
 	if app.UseCache {
-		// Get the template cache from the app config
-		tc = app.TemplateCache
+		// Get the page cache from the app config
+		templateCache = app.TemplateCache
 	} else {
-		tc, _ = CreateTemplateCache()
+		templateCache, _ = CreateTemplateCache()
 	}
 
-	t, ok := tc[tmpl]
+	page, ok := templateCache[tmpl]
 	if !ok {
-		log.Fatal("template is not ok")
+		log.Fatal("page is not ok")
 	}
 
 	buf := new(bytes.Buffer)
 
-	_ = t.Execute(buf, nil)
+	data = AddDefaultData(data)
+
+	_ = page.Execute(buf, data)
 
 	_, err := buf.WriteTo(w)
 	if err != nil {
-		fmt.Println("Error writing template to browser:", err)
+		fmt.Println("Error writing page to browser:", err)
 	}
 }
 
