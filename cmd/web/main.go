@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-const portNumber = ":80"
+const portNumber = ":8080"
 
 var app config.AppConfig
 var session *scs.SessionManager
