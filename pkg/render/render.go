@@ -3,10 +3,10 @@ package render
 import (
 	"bytes"
 	"fmt"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/models"
 	"html/template"
 	"log"
-	"meisa_xyz/pkg/config"
-	"meisa_xyz/pkg/models"
 	"net/http"
 	"path/filepath"
 )

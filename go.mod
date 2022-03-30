@@ -1,4 +1,4 @@
-module meisa_xyz
+module github.com/iMeisa/serserilig.meisa.xyz
 
 go 1.16
 

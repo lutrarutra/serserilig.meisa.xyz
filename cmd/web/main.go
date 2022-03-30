@@ -3,15 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/handlers"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/render"
 	"log"
-	"meisa_xyz/pkg/config"
-	"meisa_xyz/pkg/handlers"
-	"meisa_xyz/pkg/render"
 	"net/http"
 	"time"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8082"
 
 var app config.AppConfig
 var session *scs.SessionManager

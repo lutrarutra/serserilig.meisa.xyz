@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"meisa_xyz/pkg/config"
-	"meisa_xyz/pkg/models"
-	"meisa_xyz/pkg/render"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/models"
+	"github.com/iMeisa/serserilig.meisa.xyz/pkg/render"
 	"net/http"
 )
 
