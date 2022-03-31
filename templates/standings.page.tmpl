@@ -10,6 +10,7 @@
                     <tr>
                         <th scope="col">Pos.</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                         <th scope="col">Driver</th>
                         <th scope="col">Points</th>
                     </tr>
@@ -20,6 +21,7 @@
                         <td class="driver-team-logo">
                             <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/ferrari-logo.png.transform/2col/image.png" alt="Fer">
                         </td>
+                        <td class="driver-team-color color-ferrari"></td>
                         <td class="driver-name">Charles Leclerc</td>
                         <td class="driver-points">45</td>
                     </tr>
@@ -28,6 +30,7 @@
                         <td class="driver-team-logo">
                             <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/ferrari-logo.png.transform/2col/image.png" alt="Fer">
                         </td>
+                        <td class="driver-team-color color-ferrari"></td>
                         <td class="driver-name">Carlos Sainz</td>
                         <td class="driver-points">33</td>
                     </tr>
@@ -36,6 +39,7 @@
                         <td class="driver-team-logo">
                             <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/red-bull-racing-logo.png.transform/2col/image.png" alt="RBR">
                         </td>
+                        <td class="driver-team-color color-redbull"></td>
                         <td class="driver-name">Max Verstappen</td>
                         <td class="driver-points">25</td>
                     </tr>
@@ -44,6 +48,7 @@
                         <td class="driver-team-logo">
                             <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/mercedes-logo.png.transform/2col/image.png" alt="Mer">
                         </td>
+                        <td class="driver-team-color color-mercedes"></td>
                         <td class="driver-name">George Russell</td>
                         <td class="driver-points">22</td>
                     </tr>
@@ -52,6 +57,7 @@
                         <td class="driver-team-logo">
                             <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/mercedes-logo.png.transform/2col/image.png" alt="Mer">
                         </td>
+                        <td class="driver-team-color color-mercedes"></td>
                         <td class="driver-name">Lewis Hamilton</td>
                         <td class="driver-points">16</td>
                     </tr>
@@ -110,6 +116,10 @@
             height: 50px;
         }
 
+        table {
+            width: 50%
+        }
+
         .driver-pos {
             width: 5%
         }
@@ -124,12 +134,25 @@
         }
 
         .driver-standings {
-            border-right: 2px solid lightgray;
+            border-right: 1px solid lightgray;
             height: 500px;
         }
         .team-standings {
-            border-left: 2px solid lightgray;
+            border-left: 1px solid lightgray;
             height: 500px;
+        }
+
+        .driver-team-color {
+            width: 1%
+        }
+        .color-ferrari {
+            border-left: 3px solid red;
+        }
+        .color-redbull {
+            border-left: 3px solid darkblue;
+        }
+        .color-mercedes {
+            border-left: 3px solid darkturquoise;
         }
     </style>
 
