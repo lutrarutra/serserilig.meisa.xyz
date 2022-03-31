@@ -27,6 +27,10 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
+func (m *Repository) DriverStandings(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "driver-standings.page.tmpl", &models.TemplateData{})
+}
+
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
