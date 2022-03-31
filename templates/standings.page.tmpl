@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="driver-standings col">
                 <table class="table table-dark table-striped align-middle">
                     <thead>
                     <tr>
@@ -58,7 +58,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col">
+
+            <div class="team-standings col">
                 <table class="table table-dark table-striped align-middle">
                     <thead>
                     <tr>
@@ -120,6 +121,15 @@
         }
         .driver-points {
             width: 10%
+        }
+
+        .driver-standings {
+            border-right: 2px solid lightgray;
+            height: 500px;
+        }
+        .team-standings {
+            border-left: 2px solid lightgray;
+            height: 500px;
         }
     </style>
 
