@@ -16,7 +16,7 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Use(SessionLoad)
 
 	mux.Get("/about", handlers.Repo.About)
-	mux.Get("/driver-standings", handlers.Repo.DriverStandings)
+	mux.Get("/standings", handlers.Repo.Standings)
 	mux.Get("/", handlers.Repo.Home)
 
 	return mux
