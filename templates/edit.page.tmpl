@@ -14,11 +14,11 @@
             box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
         }
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-        }
+        /*.container {*/
+        /*    display: grid;*/
+        /*    grid-template-columns: repeat(5, 1fr);*/
+        /*    gap: 10px;*/
+        /*}*/
 
         .box {
             border: 3px solid #666;
@@ -26,7 +26,8 @@
             border-radius: .5em;
             padding: 10px;
             cursor: move;
-            margin-top: 2em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
         }
 
         .box.over {
@@ -37,74 +38,104 @@
 </head>
 <body class="bg-dark text-white text-center">
     <div class="container">
-        <div class="col">
-            <div draggable="true" class="box">A</div>
-            <div draggable="true" class="box">B</div>
-            <div draggable="true" class="box">C</div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-dark table-striped align-middle">
+                    <thead>
+                    <tr>
+                        <th scope="col">Pos.</th>
+                        <th scope="col">Driver</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="driver-pos">1</th>
+                        <td class="driver-name"><div class="box" draggable="true">Charles Leclerc</div></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="driver-pos">2</th>
+                        <td class="driver-name"><div class="box" draggable="true">Carlos Sainz</div></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="driver-pos">3</th>
+                        <td class="driver-name"><div class="box" draggable="true">Max Verstappen</div></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="driver-pos">4</th>
+                        <td class="driver-name"><div class="box" draggable="true">George Russell</div></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="driver-pos">5</th>
+                        <td class="driver-name"><div class="box" draggable="true">Lewis Hamilton</div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</body>
 
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
 
-        function handleDragStart(e) {
-            this.style.opacity = '0.4';
+            function handleDragStart(e) {
+                this.style.opacity = '0.4';
 
-            dragSrcEl = this;
+                dragSrcEl = this;
 
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', this.innerHTML);
-        }
-
-        function handleDragEnd(e) {
-            this.style.opacity = '1';
-
-            items.forEach(function (item) {
-                item.classList.remove('over');
-            });
-        }
-
-        function handleDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', this.innerHTML);
             }
 
-            return false;
-        }
+            function handleDragEnd(e) {
+                this.style.opacity = '1';
 
-        function handleDragEnter(e) {
-            this.classList.add('over');
-        }
+                items.forEach(function (item) {
+                    item.classList.remove('over');
+                });
+            }
 
-        function handleDragLeave(e) {
-            this.classList.remove('over');
-        }
+            function handleDragOver(e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+
+                return false;
+            }
+
+            function handleDragEnter(e) {
+                this.classList.add('over');
+            }
+
+            function handleDragLeave(e) {
+                this.classList.remove('over');
+            }
+
+            function handleDrop(e) {
+                e.stopPropagation();
+
+                if (dragSrcEl !== this) {
+                    dragSrcEl.innerHTML = this.innerHTML;
+                    this.innerHTML = e.dataTransfer.getData('text/html');
+                }
+
+                return false;
+            }
+
+            let items = document.querySelectorAll('.container .box');
+            items.forEach(function(item) {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('dragenter', handleDragEnter);
+                item.addEventListener('dragleave', handleDragLeave);
+                item.addEventListener('dragend', handleDragEnd);
+                item.addEventListener('drop', handleDrop);
+            });
+        });
 
         function handleDrop(e) {
-            e.stopPropagation();
-
-            if (dragSrcEl !== this) {
-                dragSrcEl.innerHTML = this.innerHTML;
-                this.innerHTML = e.dataTransfer.getData('text/html');
-            }
-
+            e.stopPropagation(); // stops the browser from redirecting.
             return false;
         }
-
-        let items = document.querySelectorAll('.container .box');
-        items.forEach(function(item) {
-            item.addEventListener('dragstart', handleDragStart);
-            item.addEventListener('dragover', handleDragOver);
-            item.addEventListener('dragenter', handleDragEnter);
-            item.addEventListener('dragleave', handleDragLeave);
-            item.addEventListener('dragend', handleDragEnd);
-            item.addEventListener('drop', handleDrop);
-        });
-    });
-
-    function handleDrop(e) {
-        e.stopPropagation(); // stops the browser from redirecting.
-        return false;
-    }
-</script>
+    </script>
+</body>
+</html>
