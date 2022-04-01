@@ -14,12 +14,6 @@
             box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
         }
 
-        /*.container {*/
-        /*    display: grid;*/
-        /*    grid-template-columns: repeat(5, 1fr);*/
-        /*    gap: 10px;*/
-        /*}*/
-
         .box {
             border: 3px solid #666;
             background-color: #222;
@@ -33,6 +27,16 @@
         .box.over {
             border: 3px dotted #666;
         }
+
+        .table-ferrari {
+            background-color: #b00;
+        }
+        .table-redbull {
+            background-color: darkblue;
+        }
+        .table-mercedes {
+            background-color: darkcyan;
+        }
     </style>
 
 </head>
@@ -43,30 +47,70 @@
                 <table class="table table-dark table-striped align-middle">
                     <thead>
                     <tr>
-                        <th scope="col">Pos.</th>
-                        <th scope="col">Driver</th>
+                        <th scope="col">Teams</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row" class="driver-pos">1</th>
-                        <td class="driver-name"><div class="box" draggable="true">Charles Leclerc</div></td>
+                        <td class="ferrari">
+                            <table class="table table-ferrari text-white">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Ferrari</th>
+                                    <th scope="col">DNF</th>
+                                    <th scope="col">DNS</th>
+                                    <th scope="col">Leader</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Penalty</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><div class="box" draggable="true">Charles Leclerc</div></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="radio"></td>
+                                    <td>
+                                        <div class="input-group text-right">
+                                            <input type="text" class="form-control" placeholder="00">
+                                            <span class="input-group-text">:</span>
+                                            <input type="text" class="form-control" placeholder="00">
+                                            <span class="input-group-text">:</span>
+                                            <input type="text" class="form-control" placeholder="000">
+                                        </div>
+                                    </td>
+                                    <td><input type="time"></td>
+                                </tr>
+                                <tr><td><div class="box" draggable="true">Carlos Sainz</div></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="driver-pos">2</th>
-                        <td class="driver-name"><div class="box" draggable="true">Carlos Sainz</div></td>
+                        <td class="redbull">
+                            <table class="table table-redbull text-white">
+                                <thead>
+                                <tr><th scope="col">Red Bull</th></tr>
+                                </thead>
+                                <tbody>
+                                <tr><td><div class="box" draggable="true">Max Verstappen</div></td></tr>
+                                <tr><td><div class="box" draggable="true">Sergio Perez</div></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="driver-pos">3</th>
-                        <td class="driver-name"><div class="box" draggable="true">Max Verstappen</div></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">4</th>
-                        <td class="driver-name"><div class="box" draggable="true">George Russell</div></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">5</th>
-                        <td class="driver-name"><div class="box" draggable="true">Lewis Hamilton</div></td>
+                        <td class="Mercedes">
+                            <table class="table table-mercedes text-white">
+                                <thead>
+                                <tr><th scope="col">Mercedes</th></tr>
+                                </thead>
+                                <tbody>
+                                <tr><td><div class="box" draggable="true">Lewis Hamilton</div></td></tr>
+                                <tr><td><div class="box" draggable="true">George Russell</div></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
