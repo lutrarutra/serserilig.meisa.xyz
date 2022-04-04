@@ -21,7 +21,7 @@ func (m *sqliteDBRepo) createDriverTable() error {
 	return nil
 }
 
-func (m *sqliteDBRepo) createTeamTable() error {
+func (m *sqliteDBRepo) CreateTeamTable() error {
 	statement := `select name from sqlite_master where type='table' and name='teams'`
 
 	rows, err := m.DB.Query(statement)
@@ -67,10 +67,6 @@ func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 	fmt.Println(m.DB.Stats())
 
 	err := m.createDriverTable()
-	if err != nil {
-		return err
-	}
-	err = m.createTeamTable()
 	if err != nil {
 		return err
 	}

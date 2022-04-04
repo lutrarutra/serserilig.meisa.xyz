@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
@@ -65,6 +64,8 @@ func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) GetAllTeams(w http.ResponseWriter, r *http.Request) {
+	m.DB.CreateTeamTable()
+
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
 		log.Fatal(err)
@@ -84,16 +85,6 @@ func (m *Repository) Edit(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
-	newDriver := models.Driver{
-		Name: "New Guy",
-		TeamID: -1,
-	}
-
-	err := m.DB.InsertDriver(newDriver)
-	if err != nil {
-		fmt.Println(err)
-	}
-
 	render.Template(w, "standings.page.tmpl", &models.TemplateData{})
 }
 
