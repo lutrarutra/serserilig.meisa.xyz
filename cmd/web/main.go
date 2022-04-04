@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/driver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/handlers"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
 	"log"
@@ -28,6 +29,14 @@ func main() {
 
 	app.Session = session
 
+	// Connect to db
+	log.Println("Connecting to DB...")
+	db, err := driver.ConnectSQL("season2")
+	if err != nil {
+		log.Fatal("Cannot connect to database")
+	}
+	log.Println("Connected to DB")
+
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
@@ -36,7 +45,7 @@ func main() {
 	app.TemplateCache = tc
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
 

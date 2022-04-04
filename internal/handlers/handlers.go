@@ -2,8 +2,11 @@ package handlers
 
 import (
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/driver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository/dbrepo"
 	"net/http"
 )
 
@@ -13,12 +16,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB: dbrepo.NewSqliteRepo(db.SQL, a),
 	}
 }
 

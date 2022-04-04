@@ -2,6 +2,7 @@ package driver
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"time"
 )
@@ -18,8 +19,8 @@ const maxIdleDbConn = 5
 const connMaxLifetime = 5 * time.Minute
 
 // ConnectSQL creates db pool for sqlite
-func ConnectSQL(dsn string) (*DB, error) {
-	db, err := NewDatabase(dsn)
+func ConnectSQL(dbName string) (*DB, error) {
+	db, err := NewDatabase(dbName)
 	if err != nil {
 		panic(err)
 	}
@@ -42,8 +43,8 @@ func testDB(db *sql.DB) error {
 }
 
 // NewDatabase creates a new database for the application
-func NewDatabase(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", dsn)
+func NewDatabase(dbName string) (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", fmt.Sprintf("db/%s.db", dbName))
 	if err != nil {
 		return nil, err
 	}
