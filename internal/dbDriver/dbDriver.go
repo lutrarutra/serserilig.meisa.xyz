@@ -14,9 +14,9 @@ type DB struct {
 
 var dbConn = &DB{}
 
-const maxOpenDbConn = 10
-const maxIdleDbConn = 5
-const connMaxLifetime = 5 * time.Minute
+const maxOpenDbConn = 20
+const maxIdleDbConn = 3
+const connMaxLifetime = 1 * time.Second
 
 // ConnectSQL creates db pool for sqlite
 func ConnectSQL(dbName string) (*DB, error) {
@@ -28,6 +28,7 @@ func ConnectSQL(dbName string) (*DB, error) {
 	db.SetMaxOpenConns(maxOpenDbConn)
 	db.SetMaxIdleConns(maxIdleDbConn)
 	db.SetConnMaxLifetime(connMaxLifetime)
+	db.SetConnMaxIdleTime(connMaxLifetime)
 
 	dbConn.SQL = db
 

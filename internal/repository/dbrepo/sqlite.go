@@ -21,9 +21,21 @@ func (m *sqliteDBRepo) createDriverTable() error {
 }
 
 func (m *sqliteDBRepo) createTeamTable() error {
-	statement := `create table if not exists teams (id integer primary key not null, name text, abbr text, points integer, driver1 text, driver2 text)`
+	statement := `select name from sqlite_master where type='table' and name='teams'`
 
-	_, err := m.DB.Exec(statement)
+	rows, err := m.DB.Query(statement)
+	if err != nil {
+		return err
+	}
+
+	if rows.Next() {
+		return nil
+	}
+	defer rows.Close()
+
+	statement = `create table teams (id integer primary key not null, name text, abbr text, points integer, driver1 text, driver2 text)`
+
+	_, err = m.DB.Exec(statement)
 	if err != nil {
 		return err
 	}
@@ -48,31 +60,42 @@ func (m *sqliteDBRepo) createTeamTable() error {
 		}
 	}
 
-	fmt.Println(teams)
-
 	return nil
 }
 
 func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
-	err := m.createDriverTable()
-	if err != nil {
-		return err
-	}
-	err = m.createTeamTable()
-	if err != nil {
-		return err
-	}
+	fmt.Println(m.DB.Stats())
+
+	//err := m.createDriverTable()
+	//if err != nil {
+	//	return err
+	//}
+	//err = m.createTeamTable()
+	//if err != nil {
+	//	return err
+	//}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	statement := `insert into drivers (name, points) values ($1, $2)`
+	statement := fmt.Sprintf(`select name from drivers where name='%s'`, driver.Name)
+
+	rows, err := m.DB.Query(statement)
+	if err != nil {
+		return err
+	}
+
+	for rows.Next() {
+		return nil
+	}
+	rows.Close()
+
+	statement = `insert into drivers (name, points) values ($1, $2)`
 
 	_, err = m.DB.ExecContext(ctx, statement, driver.Name, 0)
 	if err != nil {
 		return err
 	}
-
 
 	return nil
 }
