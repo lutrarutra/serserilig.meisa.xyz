@@ -15,52 +15,7 @@
                         <th scope="col">Points</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row" class="driver-pos">1</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/ferrari-logo.png.transform/2col/image.png" alt="Fer">
-                        </td>
-                        <td class="driver-team-color"><div class="color-ferrari"></div></td>
-                        <td class="driver-name">Charles Leclerc</td>
-                        <td class="driver-points">45</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">2</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/ferrari-logo.png.transform/2col/image.png" alt="Fer">
-                        </td>
-                        <td class="driver-team-color"><div class="color-ferrari"></div></td>
-                        <td class="driver-name">Carlos Sainz</td>
-                        <td class="driver-points">33</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">3</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/red-bull-racing-logo.png.transform/2col/image.png" alt="RBR">
-                        </td>
-                        <td class="driver-team-color"><div class="color-redbull"></div></td>
-                        <td class="driver-name">Max Verstappen</td>
-                        <td class="driver-points">25</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">4</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/mercedes-logo.png.transform/2col/image.png" alt="Mer">
-                        </td>
-                        <td class="driver-team-color"><div class="color-mercedes"></div></td>
-                        <td class="driver-name">George Russell</td>
-                        <td class="driver-points">22</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">5</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/mercedes-logo.png.transform/2col/image.png" alt="Mer">
-                        </td>
-                        <td class="driver-team-color"><div class="color-mercedes"></div></td>
-                        <td class="driver-name">Lewis Hamilton</td>
-                        <td class="driver-points">16</td>
-                    </tr>
+                    <tbody id="driver-standings">
                     </tbody>
                 </table>
             </div>
@@ -71,35 +26,12 @@
                     <tr>
                         <th scope="col">Pos.</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                         <th scope="col">Team</th>
                         <th scope="col">Points</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row" class="driver-pos">1</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/ferrari-logo.png.transform/2col/image.png" alt="Fer">
-                        </td>
-                        <td class="driver-name">Ferrari</td>
-                        <td class="driver-points">78</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">2</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/mercedes-logo.png.transform/2col/image.png" alt="Mer">
-                        </td>
-                        <td class="driver-name">Mercedes</td>
-                        <td class="driver-points">38</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="driver-pos">3</th>
-                        <td class="driver-team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/red-bull-racing-logo.png.transform/2col/image.png" alt="RBR">
-                        </td>
-                        <td class="driver-name">Red Bull Racing</td>
-                        <td class="driver-points">37</td>
-                    </tr>
+                    <tbody id="team-standings">
                     </tbody>
                 </table>
             </div>
@@ -133,6 +65,19 @@
             width: 10%
         }
 
+        .team-pos {
+            width: 5%
+        }
+        .team-logo {
+            width: 5%
+        }
+        .team-name {
+            text-align: left;
+        }
+        .team-points {
+            width: 10%
+        }
+
         .driver-standings {
             border-right: 1px solid lightgray;
             height: 500px;
@@ -145,11 +90,15 @@
         .driver-team-color {
             width: 3px
         }
+        .team-color {
+            width: 3px
+        }
+
         .color-ferrari {
             border-left: 3px solid red;
             height: 2em;
         }
-        .color-redbull {
+        .color-red-bull-racing {
             border-left: 3px solid darkblue;
             height: 2em;
         }
@@ -164,8 +113,24 @@
 
 {{define "js"}}
 
+    <script src="/static/js/standings/standings.js"></script>
+
+    <script src="/static/json/drivers.js"></script>
+    <script src="/static/json/teams.js"></script>
+
     <script>
         activateNav('nav-standings')
+
+        for (const team_name in teams) {
+            const team = teams[team_name]
+            for (const index in team["driverIDs"]) {
+                const driver_id = team["driverIDs"][index]
+                drivers[driver_id]["team"] = team_name
+            }
+        }
+        
+        buildDriverStandings()
+        buildTeamStandings()
     </script>
 
 {{end}}
