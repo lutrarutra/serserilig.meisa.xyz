@@ -10,7 +10,7 @@ type Driver struct {
 type Team struct {
 	ID           int    `json:"id"`
 	Name         string `json:"name"`
-	Abbreviation string `json:"abr"`
+	Abbreviation string `json:"abbr"`
 	Driver1      int    `json:"driver1"`
 	Driver2      int    `json:"driver2"`
 	Points       int    `json:"points"`

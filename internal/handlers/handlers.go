@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
@@ -51,6 +52,15 @@ func (m *Repository) Edit(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
+	newDriver := models.Driver{
+		Name: "New Guy",
+	}
+
+	err := m.DB.InsertDriver(newDriver)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	render.Template(w, "standings.page.tmpl", &models.TemplateData{})
 }
 
