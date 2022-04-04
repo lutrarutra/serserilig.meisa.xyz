@@ -49,6 +49,8 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
+	m.DB.CreateDriverTable()
+
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
 		log.Fatal(err)

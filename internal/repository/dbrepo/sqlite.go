@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func (m *sqliteDBRepo) createDriverTable() error {
+func (m *sqliteDBRepo) CreateDriverTable() error {
 	statement := `create table if not exists drivers (id integer primary key not null, name TEXT, team_id integer, points integer)`
 
 	_, err := m.DB.Exec(statement)
@@ -66,7 +66,7 @@ func (m *sqliteDBRepo) CreateTeamTable() error {
 func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 	fmt.Println(m.DB.Stats())
 
-	err := m.createDriverTable()
+	err := m.CreateDriverTable()
 	if err != nil {
 		return err
 	}
