@@ -52,9 +52,9 @@ func (m *sqliteDBRepo) createTeamTable() error {
 		return err
 	}
 
-	statement = `insert into teams (name, abbr, points) values ($1, $2, $3)`
+	statement = `insert into teams (name, abbr, points, driver1, driver2) values ($1, $2, $3, $4, $5)`
 	for _, team := range teams {
-		_, err = m.DB.Exec(statement, team.Name, team.Abbreviation, team.Points)
+		_, err = m.DB.Exec(statement, team.Name, team.Abbreviation, team.Points, -1, -1)
 		if err != nil {
 			return err
 		}
@@ -124,4 +124,31 @@ func (m *sqliteDBRepo) QueryAllDrivers() ([]models.Driver, error) {
 	}
 
 	return drivers, nil
+}
+
+func (m *sqliteDBRepo) QueryAllTeams() ([]models.Team, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := `select * from teams order by points desc`
+
+	rows, err := m.DB.QueryContext(ctx, statement)
+	if err != nil {
+		return nil, err
+	}
+
+	var teams []models.Team
+
+	for rows.Next() {
+		var newTeam models.Team
+		err = rows.Scan(&newTeam.ID, &newTeam.Name, &newTeam.Abbreviation, &newTeam.Points, &newTeam.Driver1, &newTeam.Driver2)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		teams = append(teams, newTeam)
+	}
+
+	return teams, nil
 }
