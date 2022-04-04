@@ -1,5 +1,5 @@
 function buildDriverStandings() {
-    let driver_standings = document.getElementById('driver-standings')
+    let driver_standings = document.getElementById('dbDriver-standings')
     let pos_count = 1
     for (const driver_id in drivers) {
         const driver = drivers[driver_id]

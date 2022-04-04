@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/driver"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/handlers"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
 	"log"
@@ -31,7 +31,7 @@ func main() {
 
 	// Connect to db
 	log.Println("Connecting to DB...")
-	db, err := driver.ConnectSQL("season2")
+	db, err := dbDriver.ConnectSQL("season2")
 	if err != nil {
 		log.Fatal("Cannot connect to database")
 	}

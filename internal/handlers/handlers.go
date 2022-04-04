@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/driver"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
@@ -20,7 +20,7 @@ type Repository struct {
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
+func NewRepo(a *config.AppConfig, db *dbDriver.DB) *Repository {
 	return &Repository{
 		App: a,
 		DB: dbrepo.NewSqliteRepo(db.SQL, a),
