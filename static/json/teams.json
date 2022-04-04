@@ -16,5 +16,40 @@
     "abbr": "rbr",
     "points": 37,
     "driverIDs": ["2", "5"]
+  },
+  "alpine": {
+    "name": "Alpine",
+    "abbr": "alp",
+    "points": 16
+  },
+  "haas-f1-team": {
+    "name": "Haas F1 Team",
+    "abbr": "haas",
+    "points": 12
+  },
+  "alfa-romeo": {
+    "name": "Alfa Romeo",
+    "abbr": "alf",
+    "points": 9
+  },
+  "alphatauri": {
+    "name": "AlphaTauri",
+    "abbr": "at",
+    "points": 8
+  },
+  "mclaren": {
+    "name": "McLaren",
+    "abbr": "mcl",
+    "points": 6
+  },
+  "aston-martin": {
+    "name": "Aston Martin",
+    "abbr": "ast",
+    "points": 0
+  },
+  "williams": {
+    "name": "Williams",
+    "abbr": "wil",
+    "points": 0
   }
 }
