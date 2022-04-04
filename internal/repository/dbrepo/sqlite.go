@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"io/ioutil"
+	"log"
 	"time"
 )
 
@@ -31,7 +32,6 @@ func (m *sqliteDBRepo) createTeamTable() error {
 	if rows.Next() {
 		return nil
 	}
-	defer rows.Close()
 
 	statement = `create table teams (id integer primary key not null, name text, abbr text, points integer, driver1 text, driver2 text)`
 
@@ -66,14 +66,14 @@ func (m *sqliteDBRepo) createTeamTable() error {
 func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 	fmt.Println(m.DB.Stats())
 
-	//err := m.createDriverTable()
-	//if err != nil {
-	//	return err
-	//}
-	//err = m.createTeamTable()
-	//if err != nil {
-	//	return err
-	//}
+	err := m.createDriverTable()
+	if err != nil {
+		return err
+	}
+	err = m.createTeamTable()
+	if err != nil {
+		return err
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -88,14 +88,40 @@ func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 	for rows.Next() {
 		return nil
 	}
-	rows.Close()
 
-	statement = `insert into drivers (name, points) values ($1, $2)`
+	statement = `insert into drivers (name, team_id, points) values ($1, $2, $3)`
 
-	_, err = m.DB.ExecContext(ctx, statement, driver.Name, 0)
+	_, err = m.DB.ExecContext(ctx, statement, driver.Name, driver.TeamID, 0)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (m *sqliteDBRepo) QueryAllDrivers() ([]models.Driver, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := `select * from drivers`
+
+	rows, err := m.DB.QueryContext(ctx, statement)
+	if err != nil {
+		return nil, err
+	}
+
+	var drivers []models.Driver
+
+	for rows.Next() {
+		var newDriver models.Driver
+		err = rows.Scan(&newDriver.ID, &newDriver.Name, &newDriver.TeamID, &newDriver.Points)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		drivers = append(drivers, newDriver)
+	}
+
+	return drivers, nil
 }

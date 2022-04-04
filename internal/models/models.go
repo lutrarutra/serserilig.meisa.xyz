@@ -3,7 +3,7 @@ package models
 type Driver struct {
 	ID     int    `json:"id"`
 	Name   string `json:"name"`
-	TeamID string `json:"team-id"`
+	TeamID int    `json:"team-id"`
 	Points int    `json:"points"`
 }
 

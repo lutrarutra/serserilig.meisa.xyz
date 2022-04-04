@@ -20,6 +20,8 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Get("/standings", handlers.Repo.Standings)
 	mux.Get("/", handlers.Repo.Home)
 
+	mux.Get("/db-all-drivers", handlers.Repo.GetAllDrivers)
+
 	// HTML static files location
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

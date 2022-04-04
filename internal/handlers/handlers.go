@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
@@ -8,6 +9,7 @@ import (
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository/dbrepo"
+	"log"
 	"net/http"
 )
 
@@ -47,6 +49,21 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
+	drivers, err := m.DB.QueryAllDrivers()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	driversJSON, err := json.Marshal(drivers)
+	if err != nil {
+		log.Fatal("Could not convert to JSON:", err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, _ = w.Write(driversJSON)
+}
+
 func (m *Repository) Edit(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, "edit.page.tmpl", &models.TemplateData{})
 }
@@ -54,6 +71,7 @@ func (m *Repository) Edit(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
 	newDriver := models.Driver{
 		Name: "New Guy",
+		TeamID: -1,
 	}
 
 	err := m.DB.InsertDriver(newDriver)
