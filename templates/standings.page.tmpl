@@ -126,6 +126,7 @@
             for (const index in team["driverIDs"]) {
                 const driver_id = team["driverIDs"][index]
                 drivers[driver_id]["team"] = team_name
+                drivers[driver_id]["team_abr"] = team['abr']
             }
         }
         

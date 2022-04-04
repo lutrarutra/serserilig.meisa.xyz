@@ -7,7 +7,8 @@ function buildDriverStandings() {
                 <tr>
                     <th scope="row" class="driver-pos">${pos_count}</th>
                     <td class="driver-team-logo">
-                        <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/${driver['team']}-logo.png.transform/2col/image.png" alt="Fer">
+                        <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/${driver['team']}-logo.png.transform/2col/image.png" 
+                        alt="${driver['team_abr']}">
                     </td>
                     <td class="driver-team-color"><div class="color-${driver['team']}"></div></td>
                     <td class="driver-name">${driver['name']}</td>
@@ -27,7 +28,8 @@ function buildTeamStandings() {
                     <tr>
                         <th scope="row" class="team-pos">${pos_count}</th>
                         <td class="team-logo">
-                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/${team_name}-logo.png.transform/2col/image.png" alt="Fer">
+                            <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/${team_name}-logo.png.transform/2col/image.png" 
+                            alt="${team['abr']}">
                         </td>
                         <td class="team-color"><div class="color-${team_name}"></div></td>
                         <td class="team-name">${team['name']}</td>
