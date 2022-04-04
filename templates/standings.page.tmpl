@@ -115,11 +115,11 @@
 
     <script src="/static/js/standings/standings.js"></script>
 
-    <script src="/static/json/drivers.js"></script>
-    <script src="/static/json/teams.js"></script>
-
     <script>
         activateNav('nav-standings')
+
+        const teams = JSON.parse({{index .StringMap "teams"}})
+        const drivers = JSON.parse({{index .StringMap "drivers"}})
 
         for (const team_name in teams) {
             const team = teams[team_name]

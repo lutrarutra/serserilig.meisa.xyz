@@ -1,4 +1,4 @@
-let drivers = {
+{
   "0": {
     "name": "Charles Leclerc",
     "points": 45

@@ -3,9 +3,10 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/iMeisa/serserilig.meisa.xyz/pkg/config"
-	"github.com/iMeisa/serserilig.meisa.xyz/pkg/models"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -20,7 +21,22 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 func AddDefaultData(data *models.TemplateData) *models.TemplateData {
+	stringMap := make(map[string]string)
+	drivers , err := ioutil.ReadFile("./static/json/drivers.json")
+	if err == nil {
+		stringMap["drivers"] = string(drivers)
+	} else {
+		fmt.Println(err)
+	}
 
+	teams, err := ioutil.ReadFile("./static/json/teams.json")
+	if err == nil {
+		stringMap["teams"] = string(teams)
+	} else {
+		fmt.Println(err)
+	}
+
+	data.StringMap = stringMap
 	return data
 }
 
