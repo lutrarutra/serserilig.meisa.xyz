@@ -16,8 +16,29 @@
                 </tbody>
             </table>
         </div>
-        
-        <div class="row">
+
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDriverModal">Add Driver</button>
+
+        <div class="modal fade" id="addDriverModal" tabindex="-1" aria-labelledby="addDriverModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="addDriverModalLabel">Add Driver</h5>
+                    </div>
+                    <div class="modal-body bg-dark">
+                        <form action="" method="post" id="add-driver">
+                            <label for="add-driver-name">Driver Name</label>
+                            <input type="text" class="form-control bg-dark text-white" id="add-driver-name">
+                        </form>
+
+                        <div class="alert bg-success mt-3" role="alert" id="add-success" hidden>Added Driver</div>
+                    </div>
+                    <div class="modal-footer bg-dark">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" onclick="addDriver()">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {{end}}
