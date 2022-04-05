@@ -1,38 +1,5 @@
 {{template "admin" .}}
 
-{{define "css"}}
-    <style>
-        nav {
-            box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-        }
-
-        .box {
-            border: 3px solid #666;
-            background-color: #222;
-            border-radius: .5em;
-            padding: 10px;
-            cursor: move;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .box.over {
-            border: 3px dotted #666;
-        }
-
-        .table-ferrari {
-            background-color: #b00;
-        }
-        .table-redbull {
-            background-color: darkblue;
-        }
-        .table-mercedes {
-            background-color: darkcyan;
-        }
-    </style>
-
-{{end}}
-
 {{define "content"}}
     <div class="container">
         <div class="row">
@@ -110,6 +77,39 @@
             </div>
         </div>
     </div>
+
+{{end}}
+
+{{define "css"}}
+    <style>
+        nav {
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+        }
+
+        .box {
+            border: 3px solid #666;
+            background-color: #222;
+            border-radius: .5em;
+            padding: 10px;
+            cursor: move;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .box.over {
+            border: 3px dotted #666;
+        }
+
+        .table-ferrari {
+            background-color: #b00;
+        }
+        .table-redbull {
+            background-color: darkblue;
+        }
+        .table-mercedes {
+            background-color: darkcyan;
+        }
+    </style>
 
 {{end}}
 
