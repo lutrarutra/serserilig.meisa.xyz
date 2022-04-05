@@ -2,9 +2,24 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 )
+
+func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
+	params := r.URL.Query()
+	fmt.Println("params: ", params)
+
+	if len(params) < 1 {
+		log.Println("No key received")
+		return
+	}
+
+	for key, value := range params {
+		fmt.Println(key, value)
+	}
+}
 
 func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
 	m.DB.CreateDriverTable()
