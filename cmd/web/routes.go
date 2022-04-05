@@ -25,8 +25,8 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Get("/edit", handlers.Repo.Edit)
 
 	// API routes
-	mux.Get("/db-all-drivers", handlers.Repo.GetAllDrivers)
-	mux.Get("/db-all-teams", handlers.Repo.GetAllTeams)
+	mux.Get("/api/drivers", handlers.Repo.GetAllDrivers)
+	mux.Get("/api/teams", handlers.Repo.GetAllTeams)
 
 	// HTML static files location
 	fileServer := http.FileServer(http.Dir("./static/"))
