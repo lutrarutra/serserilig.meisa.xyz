@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+function enableDragNDrop() {
 
     function handleDragStart(e) {
         this.style.opacity = '0.4';
@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     let items = document.querySelectorAll('.container .box');
     items.forEach(function(item) {
+        console.log(item)
         item.addEventListener('dragstart', handleDragStart);
         item.addEventListener('dragover', handleDragOver);
         item.addEventListener('dragenter', handleDragEnter);
@@ -53,4 +54,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
         item.addEventListener('dragend', handleDragEnd);
         item.addEventListener('drop', handleDrop);
     });
-});
+}
