@@ -15,11 +15,16 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
+	// Public routes
 	mux.Get("/about", handlers.Repo.About)
-	mux.Get("/edit", handlers.Repo.Edit)
 	mux.Get("/standings", handlers.Repo.Standings)
 	mux.Get("/", handlers.Repo.Home)
 
+	// Admin routes
+	mux.Get("/edit-drivers", handlers.Repo.EditDrivers)
+	mux.Get("/edit", handlers.Repo.Edit)
+
+	// API routes
 	mux.Get("/db-all-drivers", handlers.Repo.GetAllDrivers)
 	mux.Get("/db-all-teams", handlers.Repo.GetAllTeams)
 
