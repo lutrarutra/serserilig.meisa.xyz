@@ -64,8 +64,6 @@ func (m *sqliteDBRepo) CreateTeamTable() error {
 }
 
 func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
-	fmt.Println(m.DB.Stats())
-
 	err := m.CreateDriverTable()
 	if err != nil {
 		return err
