@@ -26,6 +26,7 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Get("/edit", handlers.Repo.Edit)
 
 	// API routes
+	mux.Get("/api/driver", handlers.Repo.GetDriver)
 	mux.Get("/api/drivers", handlers.Repo.GetAllDrivers)
 	mux.Get("/api/teams", handlers.Repo.GetAllTeams)
 

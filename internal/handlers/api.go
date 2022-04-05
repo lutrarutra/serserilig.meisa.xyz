@@ -41,6 +41,46 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Added Driver"))
 }
 
+func (m *Repository) GetDriver(w http.ResponseWriter, r *http.Request) {
+	m.DB.CreateDriverTable()
+
+	var driverJSON []byte
+
+	query := r.URL.Query()
+	if len(query) < 1 {
+		w.Write([]byte("Invalid request"))
+		return
+	} else if val, ok := query["id"]; ok {
+		driver, err := m.DB.QueryDriver("id", val[0])
+		if err != nil {
+			w.Write([]byte(fmt.Sprint(err)))
+			return
+		}
+
+		driverJSON, err = json.Marshal(driver)
+		if err != nil {
+			log.Fatal("Could not convert to JSON:", err)
+		}
+	} else if val, ok = query["name"]; ok {
+		driver, err := m.DB.QueryDriver("name", val[0])
+		if err != nil {
+			w.Write([]byte(fmt.Sprint(err)))
+			return
+		}
+
+		driverJSON, err = json.Marshal(driver)
+		if err != nil {
+			log.Fatal("Could not convert to JSON:", err)
+		}
+	} else {
+		w.Write([]byte("Invalid request"))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, _ = w.Write(driverJSON)
+}
+
 func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
 	m.DB.CreateDriverTable()
 

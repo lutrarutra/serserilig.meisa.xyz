@@ -93,6 +93,30 @@ func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 	return nil
 }
 
+func (m *sqliteDBRepo) QueryDriver(colName, value string) (models.Driver, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var driver models.Driver
+
+	statement := fmt.Sprintf(`select * from drivers where %v='%v'`, colName, value)
+
+	rows, err := m.DB.QueryContext(ctx, statement)
+	if err != nil {
+		return driver, err
+	}
+
+	for rows.Next() {
+		err = rows.Scan(&driver.ID, &driver.Name, &driver.TeamID, &driver.Points)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+	}
+
+	return driver, nil
+}
+
 func (m *sqliteDBRepo) QueryAllDrivers() ([]models.Driver, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
