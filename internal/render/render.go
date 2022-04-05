@@ -22,7 +22,7 @@ func NewRenderer(a *config.AppConfig) {
 }
 
 // AddDefaultData adds data for all templates
-func AddDefaultData(data *models.TemplateData) *models.TemplateData {
+func AddDefaultData(data *models.TemplateData, r *http.Request) *models.TemplateData {
 	stringMap := make(map[string]string)
 	drivers , err := ioutil.ReadFile("./static/json/drivers.json")
 	if err == nil {
@@ -37,12 +37,13 @@ func AddDefaultData(data *models.TemplateData) *models.TemplateData {
 	} else {
 		fmt.Println(err)
 	}
+	stringMap["remote_ip"] = r.RemoteAddr
 
 	data.StringMap = stringMap
 	return data
 }
 
-func Template(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
+func Template(w http.ResponseWriter, r *http.Request, tmpl string, data *models.TemplateData) {
 
 	var templateCache map[string]*template.Template
 
@@ -60,7 +61,7 @@ func Template(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
 
 	buf := new(bytes.Buffer)
 
-	data = AddDefaultData(data)
+	data = AddDefaultData(data, r)
 
 	_ = page.Execute(buf, data)
 

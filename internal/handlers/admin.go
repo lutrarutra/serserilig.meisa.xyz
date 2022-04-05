@@ -7,13 +7,13 @@ import (
 )
 
 func (m *Repository) EditDrivers(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "editdrivers.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "editdrivers.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) EditTeams(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "editteams.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "editteams.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Edit(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "edit.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "edit.page.tmpl", &models.TemplateData{})
 }

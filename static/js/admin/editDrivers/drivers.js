@@ -1,4 +1,4 @@
-function addDriver() {
+function addDriver(remote_ip) {
     const name_input = document.getElementById('add-driver-name')
     const valid_input = validateInput(name_input)
 
@@ -6,14 +6,15 @@ function addDriver() {
     if (valid_input) {
         success_alert.removeAttribute('hidden')
 
-        const add_url = '/api/drivers/add?name=' + name_input.value
+        const add_url = '/api/drivers/add?name=' + name_input.value + '&ip=' + remote_ip
+        console.log(add_url)
         fetch(add_url)
             .then((response) => {
             return response.json()
             }).then((data) => {
-                console.log(data)
+                success_alert.innerHTML = data
             })
-        
+
         setTimeout(() => {location.reload()}, 2000)
     }
 }
