@@ -2,22 +2,28 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"log"
 	"net/http"
 )
 
 func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
-	params := r.URL.Query()
-	fmt.Println("params: ", params)
-
-	if len(params) < 1 {
-		log.Println("No key received")
+	name, ok := r.URL.Query()["name"]
+	if !ok || len(name) < 1 {
+		w.Write([]byte("name not ok"))
 		return
 	}
 
-	for key, value := range params {
-		fmt.Println(key, value)
+	newDriver := models.Driver{
+		Name: name[0],
+		TeamID: -1,
+	}
+	driverJSON, _ := json.Marshal(newDriver)
+	w.Write(driverJSON)
+
+	err := m.DB.InsertDriver(newDriver)
+	if err != nil {
+		log.Println(err)
 	}
 }
 
