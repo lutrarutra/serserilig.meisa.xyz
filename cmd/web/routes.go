@@ -21,7 +21,7 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Get("/", handlers.Repo.Home)
 
 	// Admin routes
-	mux.Get("/edit-drivers", handlers.Repo.EditDrivers)
+	mux.Get("/edit/drivers", handlers.Repo.EditDrivers)
 	mux.Get("/edit", handlers.Repo.Edit)
 
 	// API routes
