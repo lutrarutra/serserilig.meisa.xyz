@@ -20,7 +20,16 @@ function buildDriverTable() {
                             <button class="btn btn-sm btn-light" hidden>+1</button>
                         </div>
                     </td>
-                    <td><button class="btn btn-danger driver-del" hidden>Delete</button></td>
+                    <td>
+                        <button 
+                        class="btn btn-danger driver-del" 
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteDriverModal"
+                        onclick="deleteModal('${driver['name']}', '${driver['id']}')" 
+                        hidden>
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 `
             }

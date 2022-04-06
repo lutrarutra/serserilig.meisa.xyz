@@ -1,4 +1,4 @@
-function addDriver(remote_ip) {
+function addDriver() {
     const name_input = document.getElementById('add-driver-name')
     const valid_input = validateInput(name_input)
 
@@ -6,8 +6,7 @@ function addDriver(remote_ip) {
     if (valid_input) {
         success_alert.removeAttribute('hidden')
 
-        const add_url = '/api/drivers/add?name=' + name_input.value + '&ip=' + remote_ip
-        console.log(add_url)
+        const add_url = '/api/drivers/add?name=' + name_input.value + '&ip=' + user_ip
         fetch(add_url)
             .then((response) => {
                 return response.json()
@@ -17,6 +16,28 @@ function addDriver(remote_ip) {
 
         setTimeout(() => {location.reload()}, 2000)
     }
+}
+
+function deleteModal(driver_name, driver_id) {
+    document.getElementById('deleteDriverModalText').innerHTML =
+        `Are you sure you want to delete driver ${driver_name}?`
+
+    document.getElementById('deleteDriverModalButtons').innerHTML +=
+        `<button type="button" class="btn btn-danger" onclick="deleteDriver('${driver_id}')">Delete</button>`
+}
+
+function deleteDriver(id) {
+    document.getElementById('delete-success').removeAttribute('hidden')
+
+    const add_url = '/api/drivers/delete?id=' + id + '&ip=' + user_ip
+    fetch(add_url)
+        .then((response) => {
+            return response.json()
+        }).then((data) => {
+        console.log(data)
+        })
+
+    setTimeout(() => {location.reload()}, 2000)
 }
 
 function toggleEditButtons() {

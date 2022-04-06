@@ -75,7 +75,7 @@ func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 
 	statement := fmt.Sprintf(`select name from drivers where name='%s'`, driver.Name)
 
-	rows, err := m.DB.Query(statement)
+	rows, err := m.DB.QueryContext(ctx, statement)
 	if err != nil {
 		return err
 	}
@@ -87,6 +87,20 @@ func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 	statement = `insert into drivers (name, team_id, points) values ($1, $2, $3)`
 
 	_, err = m.DB.ExecContext(ctx, statement, driver.Name, driver.TeamID, 0)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) DeleteDriver(driverId string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := fmt.Sprintf(`delete from drivers where id=%v`, driverId)
+
+	_, err := m.DB.ExecContext(ctx, statement)
 	if err != nil {
 		return err
 	}

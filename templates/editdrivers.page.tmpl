@@ -28,16 +28,32 @@
                         <h5 class="modal-title" id="addDriverModalLabel">Add Driver</h5>
                     </div>
                     <div class="modal-body bg-dark">
-                        <form action="" method="post" id="add-driver">
-                            <label for="add-driver-name">Driver Name</label>
-                            <input type="text" class="form-control bg-dark text-white" id="add-driver-name">
-                        </form>
+                        <label for="add-driver-name">Driver Name</label>
+                        <input type="text" class="form-control bg-dark text-white" id="add-driver-name">
 
                         <div class="alert bg-success mt-3" role="alert" id="add-success" hidden>Added Driver</div>
                     </div>
                     <div class="modal-footer bg-dark">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" onclick="addDriver('{{index .StringMap "remote_ip"}}')">Submit</button>
+                        <button type="button" class="btn btn-success" onclick="addDriver()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="deleteDriverModal" tabindex="-1" aria-labelledby="deleteDriverModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title" id="deleteDriverModalLabel">Add Driver</h5>
+                    </div>
+                    <div class="modal-body bg-dark">
+                        <p id="deleteDriverModalText">Are you sure you want to delete driver?</p>
+                        <div class="alert bg-danger mt-3" role="alert" id="delete-success" hidden>Deleted Driver</div>
+                    </div>
+                    <div class="modal-footer bg-dark" id="deleteDriverModalButtons">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Dismiss</button>
                     </div>
                 </div>
             </div>
@@ -65,5 +81,7 @@
 
     <script>
         buildDriverTable()
+
+        const user_ip = '{{index .StringMap "remote_ip"}}'
     </script>
 {{end}}
