@@ -9,6 +9,7 @@ function buildDriverTable() {
             const drivers = data
             for (const index in drivers) {
                 const driver = drivers[index]
+                if (driver['team-id'] !== -1) { continue }
                 driver_list.innerHTML += `
                 <tr>
                     <td class="driver-name">
