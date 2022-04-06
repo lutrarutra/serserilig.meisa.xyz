@@ -14,4 +14,5 @@ type Team struct {
 	Driver1      int    `json:"driver1"`
 	Driver2      int    `json:"driver2"`
 	Points       int    `json:"points"`
+	Color        string `json:"color"`
 }

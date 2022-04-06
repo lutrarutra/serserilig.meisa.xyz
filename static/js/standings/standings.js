@@ -31,7 +31,7 @@ function buildTeamStandings() {
                             <img src="https://www.formula1.com/content/dam/fom-website/teams/2022/${team_name}-logo.png.transform/2col/image.png" 
                             alt="${team['abbr']}">
                         </td>
-                        <td class="team-color"><div class="color-${team_name}"></div></td>
+                        <td class="team-color"><div class="color-${team_name}" style="border-left: 3px solid ${team['color']}; height: 2em"></div></td>
                         <td class="team-name">${team['name']}</td>
                         <td class="team-points">${team['points']}</td>
                     </tr>

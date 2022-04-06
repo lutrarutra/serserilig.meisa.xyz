@@ -33,7 +33,8 @@ func (m *sqliteDBRepo) CreateTeamTable() error {
 		return nil
 	}
 
-	statement = `create table teams (id integer primary key not null, name text, abbr text, points integer, driver1 text, driver2 text)`
+	statement = `create table teams (id integer primary key not null, name text, abbr text, points integer, 
+										driver1 text, driver2 text, color text)`
 
 	_, err = m.DB.Exec(statement)
 	if err != nil {
@@ -52,9 +53,9 @@ func (m *sqliteDBRepo) CreateTeamTable() error {
 		return err
 	}
 
-	statement = `insert into teams (name, abbr, points, driver1, driver2) values ($1, $2, $3, $4, $5)`
+	statement = `insert into teams (name, abbr, points, driver1, driver2, color) values ($1, $2, $3, $4, $5, $6)`
 	for _, team := range teams {
-		_, err = m.DB.Exec(statement, team.Name, team.Abbreviation, team.Points, -1, -1)
+		_, err = m.DB.Exec(statement, team.Name, team.Abbreviation, team.Points, -1, -1, team.Color)
 		if err != nil {
 			return err
 		}
@@ -159,7 +160,7 @@ func (m *sqliteDBRepo) QueryAllTeams() ([]models.Team, error) {
 
 	for rows.Next() {
 		var newTeam models.Team
-		err = rows.Scan(&newTeam.ID, &newTeam.Name, &newTeam.Abbreviation, &newTeam.Points, &newTeam.Driver1, &newTeam.Driver2)
+		err = rows.Scan(&newTeam.ID, &newTeam.Name, &newTeam.Abbreviation, &newTeam.Points, &newTeam.Driver1, &newTeam.Driver2, &newTeam.Color)
 		if err != nil {
 			log.Println(err)
 			continue
