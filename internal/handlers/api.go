@@ -29,8 +29,7 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newDriver := models.Driver{
-		Name:   name[0],
-		TeamID: -1,
+		Name: name[0],
 	}
 
 	err := m.DB.InsertDriver(newDriver)

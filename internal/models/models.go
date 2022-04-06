@@ -1,10 +1,11 @@
 package models
 
 type Driver struct {
-	ID     int    `json:"id"`
-	Name   string `json:"name"`
-	TeamID int    `json:"team-id"`
-	Points int    `json:"points"`
+	ID            int    `json:"id"`
+	Name          string `json:"name"`
+	TeamID        int    `json:"team-id"`
+	Points        int    `json:"points"`
+	PenaltyPoints int    `json:"penalty-points"`
 }
 
 type Team struct {

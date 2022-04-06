@@ -11,7 +11,7 @@ import (
 )
 
 func (m *sqliteDBRepo) CreateDriverTable() error {
-	statement := `create table if not exists drivers (id integer primary key not null, name TEXT, team_id integer, points integer)`
+	statement := `create table if not exists drivers (id integer primary key not null, name TEXT, team_id integer, points integer, penalty_points integer)`
 
 	_, err := m.DB.Exec(statement)
 	if err != nil {
@@ -84,9 +84,9 @@ func (m *sqliteDBRepo) InsertDriver(driver models.Driver) error {
 		return nil
 	}
 
-	statement = `insert into drivers (name, team_id, points) values ($1, $2, $3)`
+	statement = `insert into drivers (name, team_id, points, penalty_points) values ($1, $2, $3, $4)`
 
-	_, err = m.DB.ExecContext(ctx, statement, driver.Name, driver.TeamID, 0)
+	_, err = m.DB.ExecContext(ctx, statement, driver.Name, -1, 0, 0)
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (m *sqliteDBRepo) QueryDriver(colName, value string) (models.Driver, error)
 	}
 
 	for rows.Next() {
-		err = rows.Scan(&driver.ID, &driver.Name, &driver.TeamID, &driver.Points)
+		err = rows.Scan(&driver.ID, &driver.Name, &driver.TeamID, &driver.Points, &driver.PenaltyPoints)
 		if err != nil {
 			log.Println(err)
 			continue
@@ -147,7 +147,7 @@ func (m *sqliteDBRepo) QueryAllDrivers() ([]models.Driver, error) {
 
 	for rows.Next() {
 		var newDriver models.Driver
-		err = rows.Scan(&newDriver.ID, &newDriver.Name, &newDriver.TeamID, &newDriver.Points)
+		err = rows.Scan(&newDriver.ID, &newDriver.Name, &newDriver.TeamID, &newDriver.Points, &newDriver.PenaltyPoints)
 		if err != nil {
 			log.Println(err)
 			continue
