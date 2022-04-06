@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/network"
 	"log"
 	"net/http"
 )
@@ -15,7 +16,7 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if remoteIP[0] != r.RemoteAddr {
+	if remoteIP[0] != network.GetRealIP(r) {
 		w.Write([]byte("Invalid request"))
 		return
 	}
@@ -27,7 +28,7 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newDriver := models.Driver{
-		Name: name[0],
+		Name:   name[0],
 		TeamID: -1,
 	}
 
