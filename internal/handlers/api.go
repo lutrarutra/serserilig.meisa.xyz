@@ -8,17 +8,12 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
-	remoteIP, ok := r.URL.Query()["ip"]
-	if !ok || len(remoteIP) < 1 {
-		w.Write([]byte("ip not ok"))
-		return
-	}
-
-	if remoteIP[0] != network.GetRealIP(r) {
-		w.Write([]byte("Invalid request"))
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
 		return
 	}
 
@@ -43,14 +38,8 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) DeleteDriver(w http.ResponseWriter, r *http.Request) {
-	remoteIP, ok := r.URL.Query()["ip"]
-	if !ok || len(remoteIP) < 1 {
-		w.Write([]byte("ip not ok"))
-		return
-	}
-
-	if remoteIP[0] != network.GetRealIP(r) {
-		w.Write([]byte("Invalid request"))
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
 		return
 	}
 
@@ -115,6 +104,45 @@ func (m *Repository) GetDriver(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(driverJSON)
 }
 
+func (m *Repository) UpdateDriver(w http.ResponseWriter, r *http.Request) {
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
+	}
+
+	validIdCols := []string{"id", "name"}
+
+	var idCol string
+	var idVal string
+	for _, col := range validIdCols {
+		if val, ok := r.URL.Query()[col]; ok && len(val) > 0 {
+
+			idCol = col
+			idVal = val[0]
+			break
+		}
+	}
+
+	validCols := []string{"team", "points", "penalty_points"}
+
+	for _, col := range validCols {
+
+		if val, ok := r.URL.Query()[col]; ok && len(val) > 0 {
+
+			if _, err := strconv.Atoi(val[0]); err == nil {
+
+				err = m.DB.UpdateDriver(idCol, idVal, col, val[0])
+				if err != nil {
+					w.Write([]byte(fmt.Sprint(err)))
+				}
+				return
+			}
+			w.Write([]byte(fmt.Sprintf("Invalid %v", col)))
+		}
+	}
+
+	w.Write([]byte("Missing Update Column name"))
+}
+
 func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
 	m.DB.CreateDriverTable()
 
@@ -147,4 +175,19 @@ func (m *Repository) GetAllTeams(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(teamsJSON)
+}
+
+func checkIP(r *http.Request) bool {
+	remoteIP, ok := r.URL.Query()["ip"]
+	if !ok || len(remoteIP) < 1 {
+		return false
+	}
+
+	userIP := strings.Split(remoteIP[0], ":")[0]
+	userIP2 := strings.Split(network.GetRealIP(r), ":")[0]
+
+	if userIP != userIP2 {
+		return false
+	}
+	return true
 }

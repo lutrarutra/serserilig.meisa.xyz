@@ -7,6 +7,7 @@ type DatabaseRepo interface {
 	CreateTeamTable() error
 	InsertDriver(driver models.Driver) error
 	DeleteDriver(driverId string) error
+	UpdateDriver(idCol, idVal, updateCol, updateVal string) error
 	QueryDriver(colName, value string) (models.Driver, error)
 	QueryAllDrivers() ([]models.Driver, error)
 	QueryAllTeams() ([]models.Team, error)

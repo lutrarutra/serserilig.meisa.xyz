@@ -37,16 +37,52 @@ function deleteDriver(id) {
         console.log(data)
         })
 
-    setTimeout(() => {location.reload()}, 2000)
+    setTimeout(() => {location.reload()}, 1000)
 }
 
-function toggleEditButtons() {
+function saveEdits() {
+    const url = base_url + 'api/drivers'
+    fetch(url)
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            const drivers = data
+            for (const index in drivers) {
+                const driver = drivers[index]
+                const driver_new_pp = document.getElementById(`penalty-points-${driver['id']}`)
+                const update_url = `${base_url}api/drivers/update?ip=${user_ip}&id=${driver['id']}&penalty_points=${driver_new_pp.value}`
+                fetch(update_url).then((response) => {console.log(response.text())})
+            }
+        })
+
+    document.getElementById('saved-alert').removeAttribute('hidden')
+    setTimeout(() => {location.reload()}, 1000)
+}
+
+function toggleEditTools() {
     document.querySelectorAll('tr button')
         .forEach(function (button) {
             if (button.hasAttribute('hidden')) {
                 button.removeAttribute('hidden')
             } else {
                 button.setAttribute('hidden', '')
+            }
+        })
+    
+    const save_button = document.getElementById('save-button')
+    if (save_button.hasAttribute('hidden')) {
+        save_button.removeAttribute('hidden')
+    } else {
+        save_button.setAttribute('hidden', '')
+    }
+
+    document.querySelectorAll('input')
+        .forEach(function (input){
+            if (input.hasAttribute('disabled')) {
+                input.removeAttribute('disabled')
+            } else {
+                input.setAttribute('disabled', '')
             }
         })
 }

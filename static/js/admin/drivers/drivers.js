@@ -14,10 +14,14 @@ function buildDriverTable() {
                     <td class="driver-name">${driver['name']}</td>
                     <td class="driver-points">${driver['points']}</td>
                     <td class="driver-penalty-points">
-                        <div class="btn-group">
-                            ${driver['penalty-points']}
-                            <button class="btn btn-sm btn-light ms-4" hidden>-1</button>
-                            <button class="btn btn-sm btn-light" hidden>+1</button>
+                        <div class="input-group">
+                            <input 
+                                class="form-control bg-dark border-secondary text-white text-center" 
+                                type="number" 
+                                value="${driver['penalty-points']}" 
+                                id="penalty-points-${driver['id']}"
+                                disabled
+                            >
                         </div>
                     </td>
                     <td>

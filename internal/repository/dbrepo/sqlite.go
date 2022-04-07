@@ -108,6 +108,20 @@ func (m *sqliteDBRepo) DeleteDriver(driverId string) error {
 	return nil
 }
 
+func (m *sqliteDBRepo) UpdateDriver(idCol, idVal, updateCol, updateVal string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := fmt.Sprintf(`update drivers set %v=%v where %v=%v`, updateCol, updateVal, idCol, idVal)
+
+	_, err := m.DB.ExecContext(ctx, statement)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *sqliteDBRepo) QueryDriver(colName, value string) (models.Driver, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
