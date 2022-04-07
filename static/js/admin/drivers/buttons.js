@@ -57,7 +57,7 @@ function saveEdits() {
         })
 
     document.getElementById('saved-alert').removeAttribute('hidden')
-    // setTimeout(() => {location.reload()}, 1000)
+    setTimeout(() => {location.reload()}, 1000)
 }
 
 function toggleEditTools() {
