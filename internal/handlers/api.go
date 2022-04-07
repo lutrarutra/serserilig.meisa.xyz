@@ -122,7 +122,7 @@ func (m *Repository) UpdateDriver(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	validCols := []string{"team", "points", "penalty_points"}
+	validCols := []string{"team_id", "points", "penalty_points"}
 
 	for _, col := range validCols {
 

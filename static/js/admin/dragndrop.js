@@ -46,7 +46,6 @@ function enableDragNDrop() {
 
     let items = document.querySelectorAll('.container .box');
     items.forEach(function(item) {
-        console.log(item)
         item.addEventListener('dragstart', handleDragStart);
         item.addEventListener('dragover', handleDragOver);
         item.addEventListener('dragenter', handleDragEnter);

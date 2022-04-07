@@ -27,22 +27,18 @@ async function buildTeamTable() {
     const team_list = document.getElementById('team-list')
 
     const drivers = await getAllDrivers()
-    console.log(drivers)
 
     const team_resp = await fetch('/api/teams')
     const teams = await team_resp.json()
     for (const index in teams) {
         const team = teams[index]
 
-        const driver1_name = typeof drivers[team['driver1']] === 'undefined' ? 'No Driver' : drivers[team['driver1']]
-        const driver2_name = typeof drivers[team['driver2']] === 'undefined' ? 'No Driver' : drivers[team['driver2']]
-
         team_list.innerHTML += `
                 <tr>
                     <td class="team-name">${team['name']}</td>
                     <td class="team-points">${team['points']}</td>
-                    <td class="team-driver1"><div class="driver-box" id="driver-box">${driver1_name}</div></td>
-                    <td class="team-driver2"><div class="driver-box" id="driver-box">${driver2_name}</div></td>
+                    <td class="team-driver1"><div class="driver-box" id="team-${team['id']}-driver1">${drivers[team['driver1']]}</div></td>
+                    <td class="team-driver2"><div class="driver-box" id="team-${team['id']}-driver2">${drivers[team['driver2']]}</div></td>
                 </tr>
             `
     }
@@ -52,7 +48,9 @@ async function getAllDrivers() {
     const response = await fetch('/api/drivers')
     const drivers = await response.json()
 
-    let driver_ids = {}
+    let driver_ids = {
+        '-1': 'No Driver'
+    }
 
     for (const index in await drivers) {
         const driver = drivers[index]
