@@ -51,8 +51,13 @@ function saveEdits() {
             for (const index in drivers) {
                 const driver = drivers[index]
                 const driver_new_pp = document.getElementById(`penalty-points-${driver['id']}`)
-                const update_url = `/api/drivers/update?ip=${user_ip}&id=${driver['id']}&penalty_points=${driver_new_pp.value}`
-                fetch(update_url).then((response) => {console.log(response.text())})
+                const driver_new_points = document.getElementById(`points-${driver['id']}`)
+
+                const base_update_url = `/api/drivers/update?ip=${user_ip}&id=${driver['id']}`
+                const pp_update_url = `${base_update_url}&penalty_points=${driver_new_pp.value}`
+                const points_update_url = `${base_update_url}&points=${driver_new_points.value}`
+                fetch(pp_update_url).then((response) => {console.log(response.text())})
+                fetch(points_update_url).then((response) => {console.log(response.text())})
             }
         })
 

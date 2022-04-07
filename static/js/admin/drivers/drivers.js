@@ -12,17 +12,23 @@ function buildDriverTable() {
                 driver_list.innerHTML += `
                 <tr>
                     <td class="driver-name">${driver['name']}</td>
-                    <td class="driver-points">${driver['points']}</td>
+                    <td class="driver-points">
+                        <input 
+                            class="form-control bg-dark border-secondary text-white text-center" 
+                            type="number" 
+                            value="${driver['points']}" 
+                            id="points-${driver['id']}"
+                            disabled
+                        >
+                    </td>
                     <td class="driver-penalty-points">
-                        <div class="input-group">
-                            <input 
-                                class="form-control bg-dark border-secondary text-white text-center" 
-                                type="number" 
-                                value="${driver['penalty-points']}" 
-                                id="penalty-points-${driver['id']}"
-                                disabled
-                            >
-                        </div>
+                        <input 
+                            class="form-control bg-dark border-secondary text-white text-center" 
+                            type="number" 
+                            value="${driver['penalty-points']}" 
+                            id="penalty-points-${driver['id']}"
+                            disabled
+                        >
                     </td>
                     <td>
                         <button 
