@@ -41,7 +41,7 @@ function deleteDriver(id) {
 }
 
 function saveEdits() {
-    const url = base_url + 'api/drivers'
+    const url = '/api/drivers'
     fetch(url)
         .then((response) => {
             return response.json()
@@ -51,13 +51,13 @@ function saveEdits() {
             for (const index in drivers) {
                 const driver = drivers[index]
                 const driver_new_pp = document.getElementById(`penalty-points-${driver['id']}`)
-                const update_url = `${base_url}api/drivers/update?ip=${user_ip}&id=${driver['id']}&penalty_points=${driver_new_pp.value}`
+                const update_url = `/api/drivers/update?ip=${user_ip}&id=${driver['id']}&penalty_points=${driver_new_pp.value}`
                 fetch(update_url).then((response) => {console.log(response.text())})
             }
         })
 
     document.getElementById('saved-alert').removeAttribute('hidden')
-    setTimeout(() => {location.reload()}, 1000)
+    // setTimeout(() => {location.reload()}, 1000)
 }
 
 function toggleEditTools() {
