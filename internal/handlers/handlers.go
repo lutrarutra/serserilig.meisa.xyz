@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
@@ -42,6 +43,7 @@ func(m *Repository) UpdateDriverJSON() {
 	if err != nil {
 		log.Fatal("Could not convert to JSON:", err)
 	}
+	fmt.Println("Drivers JSON: ", string(driversJSON))
 
 	err = os.WriteFile("./static/json/drivers.json", driversJSON, 0644)
 	if err != nil {
@@ -59,6 +61,7 @@ func(m *Repository) UpdateTeamJSON() {
 	if err != nil {
 		log.Fatal("Could not convert to JSON:", err)
 	}
+	fmt.Println("Teams JSON: ", string(teamsJSON))
 
 	err = os.WriteFile("./static/json/teams.json", teamsJSON, 0644)
 	if err != nil {
