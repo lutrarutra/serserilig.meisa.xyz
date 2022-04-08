@@ -1,26 +1,23 @@
-{
-  "0": {
-    "name": "Charles Leclerc",
-    "points": 45
-  },
-  "1": {
-    "name": "Carlos Sainz",
-    "points": 33
-  },
-  "2": {
-    "name": "Max Verstappen",
-    "points": 25
-  },
-  "3": {
-    "name": "George Russell",
-    "points": 22
-  },
-  "4": {
-    "name": "Lewis Hamilton",
-    "points": 16
-  },
-  "5": {
-    "name": "Sergio Perez",
-    "points": 12
-  }
-}
+[
+	{
+		"id": 2,
+		"name": "Stenns",
+		"team-id": -1,
+		"points": 3,
+		"penalty-points": 0
+	},
+	{
+		"id": 3,
+		"name": "Meisa",
+		"team-id": -1,
+		"points": 0,
+		"penalty-points": 0
+	},
+	{
+		"id": 4,
+		"name": "Kawhiitheclaw2",
+		"team-id": -1,
+		"points": 0,
+		"penalty-points": 0
+	}
+]

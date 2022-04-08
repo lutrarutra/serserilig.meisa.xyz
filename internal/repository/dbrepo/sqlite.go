@@ -43,7 +43,7 @@ func (m *sqliteDBRepo) CreateTeamTable() error {
 
 	teams := map[string]models.Team{}
 
-	teamsFile, err := ioutil.ReadFile("./static/json/teams.json")
+	teamsFile, err := ioutil.ReadFile("./static/json/teams_reference.json")
 	if err != nil {
 		return err
 	}

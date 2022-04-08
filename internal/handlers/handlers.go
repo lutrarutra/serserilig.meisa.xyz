@@ -43,7 +43,7 @@ func(m *Repository) UpdateDriverJSON() {
 		log.Fatal("Could not convert to JSON:", err)
 	}
 
-	err = os.WriteFile("./static/json/test_drivers.json", driversJSON, 0644)
+	err = os.WriteFile("./static/json/drivers.json", driversJSON, 0644)
 	if err != nil {
 		log.Println("Could not write to file")
 	}
@@ -60,7 +60,7 @@ func(m *Repository) UpdateTeamJSON() {
 		log.Fatal("Could not convert to JSON:", err)
 	}
 
-	err = os.WriteFile("./static/json/test_teams.json", teamsJSON, 0644)
+	err = os.WriteFile("./static/json/teams.json", teamsJSON, 0644)
 	if err != nil {
 		log.Println("Could not write to file")
 	}
