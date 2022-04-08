@@ -41,7 +41,11 @@ async function buildTeamTable() {
                         </div>
                     </td>
                     <td class="team-points">${team['points']}</td>
-                    <td class="team-driver1"><div class="driver-box" id="team-${team['id']}-driver1">${drivers[team['driver1']]}</div></td>
+                    <td class="team-driver1" style="border-left: 2px solid white">
+                        <div class="driver-box" id="team-${team['id']}-driver1">
+                            ${drivers[team['driver1']]}
+                        </div>
+                    </td>
                     <td class="team-driver2"><div class="driver-box" id="team-${team['id']}-driver2">${drivers[team['driver2']]}</div></td>
                 </tr>
             `
