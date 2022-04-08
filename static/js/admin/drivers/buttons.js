@@ -14,7 +14,10 @@ function addDriver() {
             success_alert.innerHTML = data
         })
 
-        setTimeout(() => {location.reload()}, 2000)
+        setTimeout(() => {
+            name_input.value = ''
+            location.reload()
+        }, 500)
     }
 }
 

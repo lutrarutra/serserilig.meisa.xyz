@@ -150,7 +150,7 @@ func (m *sqliteDBRepo) QueryAllDrivers() ([]models.Driver, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	statement := `select * from drivers`
+	statement := `select * from drivers order by points desc, name asc`
 
 	rows, err := m.DB.QueryContext(ctx, statement)
 	if err != nil {

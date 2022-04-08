@@ -44,8 +44,7 @@
 
     <style>
         table img {
-            width: 40px;
-            height: 40px;
+            height: 33px;
         }
 
         table {
@@ -94,47 +93,6 @@
             width: 3px
         }
 
-        /*.color-ferrari {*/
-        /*    border-left: 3px solid red;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-red-bull-racing {*/
-        /*    border-left: 3px solid darkblue;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-mercedes {*/
-        /*    border-left: 3px solid darkturquoise;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-alpine {*/
-        /*    border-left: 3px solid deepskyblue;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-haas-f1-team {*/
-        /*    border-left: 3px solid white;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-alfa-romeo {*/
-        /*    border-left: 3px solid darkred;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-alphatauri {*/
-        /*    border-left: 3px solid darkslategray;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-mclaren {*/
-        /*    border-left: 3px solid orange;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-aston-martin {*/
-        /*    border-left: 3px solid teal;*/
-        /*    height: 2em;*/
-        /*}*/
-        /*.color-williams {*/
-        /*    border-left: 3px solid dodgerblue;*/
-        /*    height: 2em;*/
-        /*}*/
-
     </style>
 
 {{end}}
@@ -148,6 +106,12 @@
         activateNav('nav-standings')
 
         const teams = JSON.parse({{index .StringMap "teams"}})
+        const teams_by_id = {}
+        for (const index in teams) {
+            const team = teams[index]
+            teams_by_id[team['id'].toString()] = team
+        }
+
         const drivers = JSON.parse({{index .StringMap "drivers"}})
 
         for (const team_name in teams) {

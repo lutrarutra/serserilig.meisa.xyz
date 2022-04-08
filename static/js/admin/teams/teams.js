@@ -26,7 +26,7 @@ function buildTeamTable() {
         team_list.innerHTML += `
                 <tr>
                     <td class="team-name align-middle">
-                        <div style="border-left: 3px solid ${team['color']}; height: 1.7em; margin: 0 2em">
+                        <div style="border-left: 3px solid ${team['color']}; height: 1.5em; margin: 0 2em">
                             ${team['name']}            
                         </div>
                     </td>
