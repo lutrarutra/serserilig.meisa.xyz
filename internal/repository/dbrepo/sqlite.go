@@ -191,7 +191,7 @@ func (m *sqliteDBRepo) QueryAllTeams() ([]models.Team, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	statement := `select * from teams order by points desc`
+	statement := `select * from teams order by points desc, name asc`
 
 	rows, err := m.DB.QueryContext(ctx, statement)
 	if err != nil {
