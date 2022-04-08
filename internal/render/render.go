@@ -32,6 +32,13 @@ func AddDefaultData(data *models.TemplateData, r *http.Request) *models.Template
 		fmt.Println(err)
 	}
 
+	driversTest, err := ioutil.ReadFile("./static/json/test_drivers.json")
+	if err == nil {
+		stringMap["drivers_test"] = string(driversTest)
+	} else {
+		fmt.Println(err)
+	}
+
 	teams, err := ioutil.ReadFile("./static/json/teams.json")
 	if err == nil {
 		stringMap["teams"] = string(teams)

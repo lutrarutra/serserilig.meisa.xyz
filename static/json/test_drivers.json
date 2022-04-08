@@ -1,0 +1,23 @@
+[
+	{
+		"id": 2,
+		"name": "Stenns",
+		"team-id": -1,
+		"points": 3,
+		"penalty-points": 0
+	},
+	{
+		"id": 3,
+		"name": "Meisa",
+		"team-id": -1,
+		"points": 0,
+		"penalty-points": 0
+	},
+	{
+		"id": 4,
+		"name": "Kawhiitheclaw2",
+		"team-id": -1,
+		"points": 0,
+		"penalty-points": 0
+	}
+]

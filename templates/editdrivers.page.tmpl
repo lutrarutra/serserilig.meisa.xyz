@@ -83,8 +83,9 @@
     <script src="/static/js/admin/drivers/drivers.js"></script>
 
     <script>
-        buildDriverTable()
-
         const user_ip = '{{index .StringMap "remote_ip"}}'
+        const drivers = JSON.parse('{{index .StringMap "drivers_test"}}')
+
+        buildDriverTable()
     </script>
 {{end}}

@@ -1,0 +1,92 @@
+[
+	{
+		"id": 7,
+		"name": "Ferrari",
+		"abbr": "fer",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 78,
+		"color": "#f91536"
+	},
+	{
+		"id": 1,
+		"name": "Mercedes",
+		"abbr": "mer",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 38,
+		"color": "#6cd3bf"
+	},
+	{
+		"id": 8,
+		"name": "Red Bull Racing",
+		"abbr": "rbr",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 37,
+		"color": "#3671c6"
+	},
+	{
+		"id": 9,
+		"name": "Alpine",
+		"abbr": "alp",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 16,
+		"color": "#2293d1"
+	},
+	{
+		"id": 10,
+		"name": "Haas F1 Team",
+		"abbr": "haas",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 12,
+		"color": "#b6babd"
+	},
+	{
+		"id": 2,
+		"name": "Alfa Romeo",
+		"abbr": "alf",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 9,
+		"color": "#c92d4b"
+	},
+	{
+		"id": 3,
+		"name": "AlphaTauri",
+		"abbr": "at",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 8,
+		"color": "#5e8faa"
+	},
+	{
+		"id": 5,
+		"name": "McLaren",
+		"abbr": "mcl",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 6,
+		"color": "#f58020"
+	},
+	{
+		"id": 4,
+		"name": "Williams",
+		"abbr": "wil",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 0,
+		"color": "#37bedd"
+	},
+	{
+		"id": 6,
+		"name": "Aston Martin",
+		"abbr": "ast",
+		"driver1": -1,
+		"driver2": -1,
+		"points": 0,
+		"color": "#358c75"
+	}
+]
