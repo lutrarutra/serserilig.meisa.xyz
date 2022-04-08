@@ -30,7 +30,15 @@ function buildTeamTable() {
                             ${team['name']}            
                         </div>
                     </td>
-                    <td class="team-points">${team['points']}</td>
+                    <td class="team-points">
+                        <input 
+                            class="form-control bg-dark border-secondary text-white text-center" 
+                            type="number" 
+                            value="${team['points']}" 
+                            id="points-${team['id']}"
+                            disabled
+                        >
+                    </td>
                     <td class="team-driver1" style="border-left: 2px solid white">
                         <div class="driver-box" id="team-${team['id']}-driver1">
                             ${driver_ids[team['driver1']]}
@@ -67,6 +75,19 @@ function updateTeamDrivers() {
         }
     }
     updateReserveDrivers()
+}
+
+function updateTeamPoints() {
+    for (const i in teams) {
+        const team = teams[i]
+        const points_input = document.getElementById(`points-${team['id']}`)
+
+        if (points_input.value !== team['points'].toString()) {
+            const update_url = `/api/teams/update?ip=${user_ip}&id=${team['id']}&points=${points_input.value}`
+            console.log(update_url)
+            fetch(update_url).then((response) => {return response.json()}).then((data) => {console.log(data)})
+        }
+    }
 }
 
 function updateReserveDrivers() {

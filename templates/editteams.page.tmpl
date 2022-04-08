@@ -2,8 +2,8 @@
 
 {{define "content"}}
     <div class="container">
-        <button class="btn btn-primary px-4" onclick="enableBoxes(); enableDragNDrop()">Edit</button>
-        <button class="btn btn-success px-4" onclick="updateTeamDrivers(); showSaveBanner()" id="save-button" hidden>Save</button>
+        <button class="btn btn-primary px-4" onclick="enableBoxes(); enableInputs(); enableDragNDrop()">Edit</button>
+        <button class="btn btn-success px-4" onclick="updateTeamDrivers(); updateTeamPoints(); showSaveBanner()" id="save-button" hidden>Save</button>
 
         <div class="alert bg-success mt-4" id="saved-alert" hidden>Saved!</div>
 
@@ -45,9 +45,9 @@
 {{define "css"}}
     <style>
         .box {
-            border: 3px solid #666;
+            border: 1px solid #666;
             background-color: #222;
-            border-radius: .5em;
+            border-radius: .3em;
             cursor: move;
             padding: 0.3em 0
         }
@@ -73,6 +73,7 @@
 {{define "js"}}
     <script src="/static/js/admin/dragndrop.js"></script>
     <script src="/static/js/admin/teams/teams.js"></script>
+    <script src="/static/js/admin/teams/buttons.js"></script>
 
     <script>
         const user_ip = '{{index .StringMap "remote_ip"}}'
@@ -94,16 +95,5 @@
         buildTeamTable()
         const reserve_driver_cache = buildDriverTable()
 
-        function enableBoxes() {
-            let items = document.querySelectorAll('.driver-box')
-            for (const index in items) {
-                const item = items[index]
-
-                if (typeof item === 'object') {
-                    item.classList.add('box')
-                    item.setAttribute('draggable', 'true')
-                }
-            }
-        }
     </script>
 {{end}}
