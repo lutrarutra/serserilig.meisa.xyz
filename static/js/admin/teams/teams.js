@@ -80,4 +80,10 @@ function updateReserveDrivers() {
                 fetch(update_url).then((response) => {return response.json()}).then((data) => {console.log(data)})
             }
         })
+
+    setTimeout(() => {location.reload()}, 2000)
+}
+
+function showSaveBanner() {
+    document.getElementById('saved-alert').removeAttribute('hidden')
 }

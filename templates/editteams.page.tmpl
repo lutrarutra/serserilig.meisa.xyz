@@ -3,7 +3,9 @@
 {{define "content"}}
     <div class="container">
         <button class="btn btn-primary px-4" onclick="enableBoxes(); enableDragNDrop()">Edit</button>
-        <button class="btn btn-success px-4" onclick="updateTeamDrivers()">Save</button>
+        <button class="btn btn-success px-4" onclick="updateTeamDrivers(); showSaveBanner()" id="save-button" hidden>Save</button>
+
+        <div class="alert bg-success mt-4" id="saved-alert" hidden>Saved!</div>
 
         <div class="row mt-4">
             <div class="col">

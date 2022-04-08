@@ -1,4 +1,5 @@
 function enableDragNDrop() {
+    document.getElementById('save-button').removeAttribute('hidden')
 
     function handleDragStart(e) {
         this.style.opacity = '0.4';
