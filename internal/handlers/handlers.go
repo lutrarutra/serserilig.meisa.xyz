@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
@@ -34,8 +33,6 @@ func NewHandlers(r *Repository) {
 }
 
 func(m *Repository) UpdateDriverJSON() {
-	fmt.Println("UpdateDriverJSON()")
-	log.Println("UpdateDriverJSON()")
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
 		log.Fatal(err)
@@ -53,8 +50,6 @@ func(m *Repository) UpdateDriverJSON() {
 }
 
 func(m *Repository) UpdateTeamJSON() {
-	fmt.Println("UpdateTeamJSON()")
-	log.Println("UpdateTeamJSON()")
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
 		log.Fatal(err)

@@ -47,9 +47,6 @@ func AddDefaultData(data *models.TemplateData, r *http.Request) *models.Template
 
 func Template(w http.ResponseWriter, r *http.Request, tmpl string, data *models.TemplateData) {
 
-	fmt.Println("render", tmpl)
-	log.Println("render", tmpl)
-
 	var templateCache map[string]*template.Template
 
 	if app.UseCache {
