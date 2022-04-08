@@ -81,11 +81,16 @@
             const driver = drivers[index]
             driver_ids[driver['id'].toString()] = driver['name']
         }
+        let driver_names = {}
+        for (const index in driver_ids) {
+            const driver_name = driver_ids[index]
+            driver_names[driver_name] = index.toString()
+        }
 
         const teams = JSON.parse('{{index .StringMap "teams"}}')
 
         buildTeamTable()
-        buildDriverTable()
+        const reserve_driver_cache = buildDriverTable()
 
         function enableBoxes() {
             let items = document.querySelectorAll('.driver-box')

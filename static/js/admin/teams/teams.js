@@ -1,21 +1,24 @@
 function buildDriverTable() {
     const driver_list = document.getElementById('driver-list')
+    const reserve_driver_cache = []
     for (const index in drivers) {
         const driver = drivers[index]
         if (driver['team-id'] !== -1) { continue }
         driver_list.innerHTML += `
         <tr>
             <td class="driver-name">
-                <div class="driver-box">
+                <div class="driver-box reserve-driver">
                     ${driver['name']}
                 </div>
             </td>
         </tr>
         `
+        reserve_driver_cache.push(driver['name'])
     }
+    return reserve_driver_cache
 }
 
-async function buildTeamTable() {
+function buildTeamTable() {
     const team_list = document.getElementById('team-list')
     for (const index in teams) {
         const team = teams[index]
@@ -39,18 +42,42 @@ async function buildTeamTable() {
     }
 }
 
-async function getAllDrivers() {
-    const response = await fetch('/api/drivers')
-    const drivers = await response.json()
+function updateTeamDrivers() {
+    for (const i in teams) {
+        const team = teams[i]
+        const seats = ['1', '2']
+        for (const j in seats) {
+            const seat = `driver${seats[j]}`
+            const new_driver = document.getElementById(`team-${team['id']}-${seat}`).innerHTML.trim()
+            const new_driver_id = driver_names[new_driver]
+            const prev_driver = driver_ids[team[seat]]
+            if (new_driver === prev_driver) { continue }
 
-    let driver_ids = {
-        '-1': 'No Driver'
+            console.log(`${team['name']} ${seat}: ${prev_driver} -> ${new_driver}`)
+
+            const driver_update_url = `/api/drivers/update?ip=${user_ip}`
+            // Update new driver team
+            if (new_driver !== 'No Driver') {
+                const new_driver_team = `${driver_update_url}&id=${new_driver_id}&team_id=${team['id']}`
+                fetch(new_driver_team).then((response) => {return response.json()}).then((data) => {console.log(data)})
+            }
+            // Update team driver
+            const new_team_driver = `/api/teams/update?ip=${user_ip}&id=${team['id']}&${seat}=${new_driver_id}`
+            fetch(new_team_driver).then((response) => {return response.json()}).then((data) => {console.log(data)})
+        }
     }
+    updateReserveDrivers()
+}
 
-    for (const index in await drivers) {
-        const driver = drivers[index]
-        driver_ids[driver['id'].toString()] = driver['name']
-    }
-
-    return driver_ids
+function updateReserveDrivers() {
+    document.querySelectorAll('.reserve-driver')
+        .forEach(function (reserve_slot) {
+            const driver_name = reserve_slot.innerHTML.trim()
+            if (!(reserve_driver_cache.includes(driver_name)) && driver_name !== 'No Driver') {
+                const driver_id = driver_names[driver_name]
+                const update_url = `/api/drivers/update?ip=${user_ip}&id=${driver_id}&team_id=-1`
+                console.log(update_url)
+                fetch(update_url).then((response) => {return response.json()}).then((data) => {console.log(data)})
+            }
+        })
 }

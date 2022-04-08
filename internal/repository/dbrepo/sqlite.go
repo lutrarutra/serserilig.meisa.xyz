@@ -173,6 +173,20 @@ func (m *sqliteDBRepo) QueryAllDrivers() ([]models.Driver, error) {
 	return drivers, nil
 }
 
+func (m *sqliteDBRepo) UpdateTeam(idCol, idVal, updateCol, updateVal string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := fmt.Sprintf(`update teams set %v=%v where %v=%v`, updateCol, updateVal, idCol, idVal)
+
+	_, err := m.DB.ExecContext(ctx, statement)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *sqliteDBRepo) QueryAllTeams() ([]models.Team, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()

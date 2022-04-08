@@ -160,6 +160,45 @@ func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(driversJSON)
 }
 
+func (m *Repository) UpdateTeam(w http.ResponseWriter, r *http.Request) {
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
+	}
+
+	validIdCols := []string{"id", "name"}
+
+	var idCol string
+	var idVal string
+	for _, col := range validIdCols {
+		if val, ok := r.URL.Query()[col]; ok && len(val) > 0 {
+
+			idCol = col
+			idVal = val[0]
+			break
+		}
+	}
+
+	validCols := []string{"driver1", "driver2", "points"}
+
+	for _, col := range validCols {
+
+		if val, ok := r.URL.Query()[col]; ok && len(val) > 0 {
+
+			if _, err := strconv.Atoi(val[0]); err == nil {
+
+				err = m.DB.UpdateTeam(idCol, idVal, col, val[0])
+				if err != nil {
+					w.Write([]byte(fmt.Sprint(err)))
+				}
+				return
+			}
+			w.Write([]byte(fmt.Sprintf("Invalid %v", col)))
+		}
+	}
+
+	w.Write([]byte("Missing Update Column name"))
+}
+
 func (m *Repository) GetAllTeams(w http.ResponseWriter, r *http.Request) {
 	m.DB.CreateTeamTable()
 

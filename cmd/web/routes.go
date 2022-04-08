@@ -34,6 +34,8 @@ func routes(_ *config.AppConfig) http.Handler {
 	mux.Get("/api/drivers/delete", handlers.Repo.DeleteDriver)
 	mux.Get("/api/drivers/update", handlers.Repo.UpdateDriver)
 
+	mux.Get("/api/teams/update", handlers.Repo.UpdateTeam)
+
 	// HTML static files location
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

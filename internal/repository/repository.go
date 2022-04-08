@@ -10,5 +10,6 @@ type DatabaseRepo interface {
 	UpdateDriver(idCol, idVal, updateCol, updateVal string) error
 	QueryDriver(colName, value string) (models.Driver, error)
 	QueryAllDrivers() ([]models.Driver, error)
+	UpdateTeam(idCol, idVal, updateCol, updateVal string) error
 	QueryAllTeams() ([]models.Team, error)
 }
