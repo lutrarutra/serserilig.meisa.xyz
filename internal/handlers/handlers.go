@@ -35,6 +35,7 @@ func NewHandlers(r *Repository) {
 
 func(m *Repository) UpdateDriverJSON() {
 	fmt.Println("UpdateDriverJSON()")
+	log.Println("UpdateDriverJSON()")
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
 		log.Fatal(err)
@@ -44,7 +45,6 @@ func(m *Repository) UpdateDriverJSON() {
 	if err != nil {
 		log.Fatal("Could not convert to JSON:", err)
 	}
-	fmt.Println("Drivers JSON: ", string(driversJSON))
 
 	err = os.WriteFile("./static/json/drivers.json", driversJSON, 0644)
 	if err != nil {
@@ -54,6 +54,7 @@ func(m *Repository) UpdateDriverJSON() {
 
 func(m *Repository) UpdateTeamJSON() {
 	fmt.Println("UpdateTeamJSON()")
+	log.Println("UpdateTeamJSON()")
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
 		log.Fatal(err)
@@ -63,7 +64,6 @@ func(m *Repository) UpdateTeamJSON() {
 	if err != nil {
 		log.Fatal("Could not convert to JSON:", err)
 	}
-	fmt.Println("Teams JSON: ", string(teamsJSON))
 
 	err = os.WriteFile("./static/json/teams.json", teamsJSON, 0644)
 	if err != nil {
