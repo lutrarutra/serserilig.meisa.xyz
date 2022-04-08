@@ -84,7 +84,6 @@ function updateTeamPoints() {
 
         if (points_input.value !== team['points'].toString()) {
             const update_url = `/api/teams/update?ip=${user_ip}&id=${team['id']}&points=${points_input.value}`
-            console.log(update_url)
             fetch(update_url).then((response) => {return response.json()}).then((data) => {console.log(data)})
         }
     }
