@@ -1,2 +1,4 @@
 .idea/
 db/
+static/json/drivers.json
+static/json/teams.json
