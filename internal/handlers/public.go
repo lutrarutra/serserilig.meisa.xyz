@@ -20,7 +20,15 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (m *Repository) Grid(w http.ResponseWriter, r *http.Request) {
+	m.UpdateDriverJSON()
+	m.UpdateTeamJSON()
+	render.Template(w, r, "grid.page.tmpl", &models.TemplateData{})
+}
+
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
+	m.UpdateDriverJSON()
+	m.UpdateTeamJSON()
 	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{})
 }
 
