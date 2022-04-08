@@ -34,6 +34,7 @@ func NewHandlers(r *Repository) {
 }
 
 func(m *Repository) UpdateDriverJSON() {
+	fmt.Println("UpdateDriverJSON()")
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
 		log.Fatal(err)
@@ -52,6 +53,7 @@ func(m *Repository) UpdateDriverJSON() {
 }
 
 func(m *Repository) UpdateTeamJSON() {
+	fmt.Println("UpdateTeamJSON()")
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
 		log.Fatal(err)
