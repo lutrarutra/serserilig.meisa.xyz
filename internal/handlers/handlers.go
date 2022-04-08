@@ -7,8 +7,8 @@ import (
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository/dbrepo"
+	"io/ioutil"
 	"log"
-	"os"
 )
 
 // Repo the repository used by the handlers
@@ -46,7 +46,7 @@ func(m *Repository) UpdateDriverJSON() {
 		log.Fatal("Could not convert to JSON:", err)
 	}
 
-	err = os.WriteFile("./static/json/drivers.json", driversJSON, 0644)
+	err = ioutil.WriteFile("./static/json/drivers.json", driversJSON, 0644)
 	if err != nil {
 		log.Println("Could not write to file")
 	}
@@ -65,7 +65,7 @@ func(m *Repository) UpdateTeamJSON() {
 		log.Fatal("Could not convert to JSON:", err)
 	}
 
-	err = os.WriteFile("./static/json/teams.json", teamsJSON, 0644)
+	err = ioutil.WriteFile("./static/json/teams.json", teamsJSON, 0644)
 	if err != nil {
 		log.Println("Could not write to file")
 	}
