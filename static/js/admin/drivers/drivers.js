@@ -1,6 +1,5 @@
 function buildDriverTable() {
     const driver_list = document.getElementById('driver-list')
-    console.log(drivers)
     for (const index in drivers) {
         const driver = drivers[index]
         driver_list.innerHTML += `

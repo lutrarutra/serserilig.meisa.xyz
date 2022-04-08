@@ -1,35 +1,22 @@
 function buildDriverTable() {
     const driver_list = document.getElementById('driver-list')
-    const url = '/api/drivers'
-    fetch(url)
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            const drivers = data
-            for (const index in drivers) {
-                const driver = drivers[index]
-                if (driver['team-id'] !== -1) { continue }
-                driver_list.innerHTML += `
-                <tr>
-                    <td class="driver-name">
-                        <div class="driver-box">
-                            ${driver['name']}
-                        </div>
-                    </td>
-                </tr>
-                `
-            }
-        })
+    for (const index in drivers) {
+        const driver = drivers[index]
+        if (driver['team-id'] !== -1) { continue }
+        driver_list.innerHTML += `
+        <tr>
+            <td class="driver-name">
+                <div class="driver-box">
+                    ${driver['name']}
+                </div>
+            </td>
+        </tr>
+        `
+    }
 }
 
 async function buildTeamTable() {
     const team_list = document.getElementById('team-list')
-
-    const drivers = await getAllDrivers()
-
-    const team_resp = await fetch('/api/teams')
-    const teams = await team_resp.json()
     for (const index in teams) {
         const team = teams[index]
 
@@ -43,10 +30,10 @@ async function buildTeamTable() {
                     <td class="team-points">${team['points']}</td>
                     <td class="team-driver1" style="border-left: 2px solid white">
                         <div class="driver-box" id="team-${team['id']}-driver1">
-                            ${drivers[team['driver1']]}
+                            ${driver_ids[team['driver1']]}
                         </div>
                     </td>
-                    <td class="team-driver2"><div class="driver-box" id="team-${team['id']}-driver2">${drivers[team['driver2']]}</div></td>
+                    <td class="team-driver2"><div class="driver-box" id="team-${team['id']}-driver2">${driver_ids[team['driver2']]}</div></td>
                 </tr>
             `
     }

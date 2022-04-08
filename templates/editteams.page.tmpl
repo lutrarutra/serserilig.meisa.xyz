@@ -74,7 +74,14 @@
 
     <script>
         const user_ip = '{{index .StringMap "remote_ip"}}'
+
         const drivers = JSON.parse('{{index .StringMap "drivers"}}')
+        let driver_ids = {'-1': 'No Driver'}
+        for (const index in drivers) {
+            const driver = drivers[index]
+            driver_ids[driver['id'].toString()] = driver['name']
+        }
+
         const teams = JSON.parse('{{index .StringMap "teams"}}')
 
         buildTeamTable()
