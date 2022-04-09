@@ -48,6 +48,7 @@ function buildTeamTable() {
                 </tr>
             `
     }
+    greyOutNames()
 }
 
 function updateTeamDrivers() {

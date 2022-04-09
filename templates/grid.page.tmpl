@@ -26,8 +26,16 @@
             height: 33px
         }
 
-        .team-logo {
+        p {
+            margin: 0
+        }
 
+        .team-logo {
+            width: 5%
+        }
+        .team-name {
+            font-size: 1.3em;
+            font-weight: bold;
         }
 
     </style>
@@ -41,7 +49,12 @@
 
         const teams = JSON.parse('{{index .StringMap "teams"}}')
         const drivers = JSON.parse('{{index .StringMap "drivers"}}')
-        let driver_ids = {'-1': 'No Driver'}
+        let driver_ids = {
+            '-1': {
+                'name': 'No Driver',
+                'penalty-points': 0
+            }
+        }
         for (const index in drivers) {
             const driver = drivers[index]
             driver_ids[driver['id'].toString()] = driver

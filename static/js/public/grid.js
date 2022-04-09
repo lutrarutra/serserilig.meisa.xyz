@@ -13,16 +13,25 @@ function buildGridTable() {
                 <td class="team-color"><div style="border-left: 3px solid ${team['color']}; height: 2em"></div></td>
                 <td class="team-name">${team['name']}</td>
                 <td class="team-drivers">
-                    ${driver1['name']}
-                    <br>
-                    ${driver2['name']}
+                    <p class="team-driver">${driver1['name']}</p>
+                    <p class="team-driver">${driver2['name']}</p>
                 </td>
                 <td class="team-driver-pp">
-                    ${driver1['penalty-points']}
-                    <br>
-                    ${driver2['penalty-points']}
+                    <p>${driver1['penalty-points']}</p>
+                    <p class="-1pp">${driver2['penalty-points']}</p>
                 </td>
             </tr>
         `
     }
+    greyOutNames()
+}
+
+function greyOutNames() {
+    document.querySelectorAll('.team-driver')
+        .forEach(function (value){
+            const name = value.innerHTML
+            if (name === 'No Driver') {
+                value.style.color = '#888'
+            }
+        })
 }

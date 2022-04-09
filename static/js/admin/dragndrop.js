@@ -42,6 +42,8 @@ function enableDragNDrop() {
             this.innerHTML = e.dataTransfer.getData('text/html');
         }
 
+        greyOutNames()
+
         return false;
     }
 
@@ -54,4 +56,16 @@ function enableDragNDrop() {
         item.addEventListener('dragend', handleDragEnd);
         item.addEventListener('drop', handleDrop);
     });
+}
+
+function greyOutNames() {
+    document.querySelectorAll('.driver-box')
+        .forEach(function (value){
+            const name = value.innerHTML.trim()
+            if (name === 'No Driver') {
+                value.style.color = '#888'
+            } else {
+                value.style.color = 'white'
+            }
+        })
 }
