@@ -38,7 +38,7 @@
                     </div>
                     <div class="modal-footer bg-dark">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" onclick="addDriver()">Submit</button>
+                        <button type="button" class="btn btn-success" onclick="addDriver()" id="submit-driver">Submit</button>
                     </div>
                 </div>
             </div>
@@ -62,6 +62,8 @@
             </div>
         </div>
     </div>
+
+    <hr>
 {{end}}
 
 {{define "css"}}
@@ -75,6 +77,9 @@
         .driver-penalty-points {
             width: 25%
         }
+        .add-driver-button {
+            margin-bottom: 3em;
+        }
     </style>
 {{end}}
 
@@ -87,5 +92,14 @@
         const drivers = JSON.parse('{{index .StringMap "drivers"}}')
 
         buildDriverTable()
+
+        const enter_button = 13
+        document.getElementById('add-driver-name')
+            .addEventListener("keyup", function(event) {
+                if (event.keyCode === enter_button) {
+                    event.preventDefault() // Cancel if needed
+                    document.getElementById('submit-driver').click()
+                }
+            })
     </script>
 {{end}}
