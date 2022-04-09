@@ -4,14 +4,14 @@
 
     <div class="container">
         <div class="row">
-            <div class="driver-standings col">
+            <div class="driver-standings col" id="driver-standings-div">
                 <table class="table table-dark table-striped align-middle">
                     <thead>
                     <tr>
                         <th scope="col">Pos.</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col">Driver</th>
+                        <th scope="col" style="text-align: left">Driver</th>
                         <th scope="col">Points</th>
                     </tr>
                     </thead>
@@ -20,14 +20,14 @@
                 </table>
             </div>
 
-            <div class="team-standings col">
+            <div class="team-standings col" id="team-standings-div">
                 <table class="table table-dark table-striped align-middle">
                     <thead>
                     <tr>
                         <th scope="col">Pos.</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col">Team</th>
+                        <th scope="col" style="text-align: left">Team</th>
                         <th scope="col">Points</th>
                     </tr>
                     </thead>
@@ -77,14 +77,12 @@
             width: 10%
         }
 
-        .driver-standings {
-            border-right: 1px solid lightgray;
-            height: 500px;
-        }
-        .team-standings {
-            border-left: 1px solid lightgray;
-            height: 500px;
-        }
+        /*.driver-standings {*/
+        /*    border-right: 1px solid lightgray;*/
+        /*}*/
+        /*.team-standings {*/
+        /*    border-left: 1px solid lightgray;*/
+        /*}*/
 
         .driver-team-color {
             width: 3px
@@ -104,6 +102,8 @@
 
     <script>
         activateNav('nav-standings')
+
+        const is_mobile = window.matchMedia("only screen and (max-width: 768px)").matches
 
         const teams = JSON.parse({{index .StringMap "teams"}})
         const teams_by_id = {}
@@ -125,6 +125,12 @@
         
         buildDriverStandings()
         buildTeamStandings()
+
+        if (!(is_mobile)) {
+            const border_style = '1px solid lightgray'
+            document.getElementById('driver-standings-div').style.borderRight = border_style
+            document.getElementById('team-standings-div').style.borderLeft = border_style
+        }
     </script>
 
 {{end}}
