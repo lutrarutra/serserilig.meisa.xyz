@@ -17,13 +17,14 @@ function buildGridTable() {
                     <p class="team-driver">${driver2['name']}</p>
                 </td>
                 <td class="team-driver-pp">
-                    <p>${driver1['penalty-points']}</p>
-                    <p class="-1pp">${driver2['penalty-points']}</p>
+                    <p class="driver-pp">${driver1['penalty-points']}</p>
+                    <p class="driver-pp">${driver2['penalty-points']}</p>
                 </td>
             </tr>
         `
     }
     greyOutNames()
+    greyOutPP()
 }
 
 function greyOutNames() {
@@ -31,6 +32,16 @@ function greyOutNames() {
         .forEach(function (value){
             const name = value.innerHTML
             if (name === 'No Driver') {
+                value.style.color = '#888'
+            }
+        })
+}
+
+function greyOutPP() {
+    document.querySelectorAll('.driver-pp')
+        .forEach(function (value){
+            const name = value.innerHTML
+            if (name === '0') {
                 value.style.color = '#888'
             }
         })
