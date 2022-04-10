@@ -90,6 +90,7 @@
     <script>
         const user_ip = '{{index .StringMap "remote_ip"}}'
         const drivers = JSON.parse('{{index .StringMap "drivers"}}')
+        const teams = JSON.parse('{{index .StringMap "teams"}}')
 
         buildDriverTable()
 

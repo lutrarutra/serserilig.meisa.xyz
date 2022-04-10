@@ -63,6 +63,7 @@ func (m *Repository) DeleteDriver(w http.ResponseWriter, r *http.Request) {
 	}
 
 	m.UpdateDriverJSON()
+	m.UpdateTeamJSON()
 	w.Write([]byte("Deleted Driver"))
 }
 

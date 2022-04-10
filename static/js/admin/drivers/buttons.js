@@ -29,20 +29,6 @@ function deleteModal(driver_name, driver_id) {
         `<button type="button" class="btn btn-danger" onclick="deleteDriver('${driver_id}')">Delete</button>`
 }
 
-function deleteDriver(id) {
-    document.getElementById('delete-success').removeAttribute('hidden')
-
-    const add_url = '/api/drivers/delete?id=' + id + '&ip=' + user_ip
-    fetch(add_url)
-        .then((response) => {
-            return response.json()
-        }).then((data) => {
-        console.log(data)
-        })
-
-    setTimeout(() => {location.reload()}, 1000)
-}
-
 function saveEdits() {
     const url = '/api/drivers'
     fetch(url)
