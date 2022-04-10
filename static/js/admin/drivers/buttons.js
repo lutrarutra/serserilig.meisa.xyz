@@ -25,8 +25,9 @@ function deleteModal(driver_name, driver_id) {
     document.getElementById('deleteDriverModalText').innerHTML =
         `Are you sure you want to delete driver ${driver_name}?`
 
-    document.getElementById('deleteDriverModalButtons').innerHTML +=
-        `<button type="button" class="btn btn-danger" onclick="deleteDriver('${driver_id}')">Delete</button>`
+    document.getElementById('deleteDriverModalButtons').innerHTML =
+        `<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Dismiss</button>
+        <button type="button" class="btn btn-danger" onclick="deleteDriver('${driver_id}')">Delete</button>`
 }
 
 function saveEdits() {
