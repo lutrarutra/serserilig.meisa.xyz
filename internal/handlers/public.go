@@ -24,6 +24,10 @@ func (m *Repository) Grid(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "grid.page.tmpl", &models.TemplateData{})
 }
 
+func (m *Repository) Staff(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "staff.page.tmpl", &models.TemplateData{})
+}
+
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{})
 }
