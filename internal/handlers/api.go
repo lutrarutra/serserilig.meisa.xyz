@@ -34,6 +34,7 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	m.UpdateDriverJSON()
 	w.Write([]byte("Added Driver"))
 }
 
@@ -61,6 +62,7 @@ func (m *Repository) DeleteDriver(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	m.UpdateDriverJSON()
 	w.Write([]byte("Deleted Driver"))
 }
 
@@ -134,6 +136,7 @@ func (m *Repository) UpdateDriver(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					w.Write([]byte(fmt.Sprint(err)))
 				}
+				m.UpdateDriverJSON()
 				return
 			}
 			w.Write([]byte(fmt.Sprintf("Invalid %v", col)))
@@ -190,6 +193,7 @@ func (m *Repository) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					w.Write([]byte(fmt.Sprint(err)))
 				}
+				m.UpdateTeamJSON()
 				return
 			}
 			w.Write([]byte(fmt.Sprintf("Invalid %v", col)))
