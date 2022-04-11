@@ -18,6 +18,7 @@ func routes(_ *config.AppConfig) http.Handler {
 	// Public routes
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/grid", handlers.Repo.Grid)
+	mux.Get("/rules", handlers.Repo.Rules)
 	mux.Get("/staff", handlers.Repo.Staff)
 	mux.Get("/standings", handlers.Repo.Standings)
 
