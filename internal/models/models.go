@@ -18,18 +18,20 @@ type Team struct {
 	Color        string `json:"color"`
 }
 
-type DriverResult struct {
-	Pos    int    `json:"pos"`
-	Driver Driver `json:"driver"`
-	TeamID string `json:"team-id"`
-	DNS    bool   `json:"dns"`
-	DNF    bool   `json:"dnf"`
+type RaceResult struct {
+	ID       int    `json:"id"`
+	RaceID   int    `json:"race-id"`
+	Pos      int    `json:"pos"`
+	DriverID int    `json:"driver-id"`
+	TeamID   string `json:"team-id"`
+	DNS      bool   `json:"dns"`
+	DNF      bool   `json:"dnf"`
 }
 
 type Race struct {
-	ID       int            `json:"id"`
-	Country  string         `json:"country"`
-	FlagName string         `json:"flag-name"`
-	Circuit  string         `json:"circuit"`
-	Results  []DriverResult `json:"results"`
+	ID       int          `json:"id"`
+	Country  string       `json:"country"`
+	FlagName string       `json:"flag-name"`
+	Circuit  string       `json:"circuit"`
+	Results  []RaceResult `json:"results"`
 }
