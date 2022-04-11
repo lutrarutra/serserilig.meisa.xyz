@@ -23,6 +23,33 @@ function buildGridTable() {
             </tr>
         `
     }
+
+    team_table.innerHTML += `
+        <tr>
+            <td class="team-logo"></td>
+            <td class="team-color"><div id="reserve-border" style="border-left: 3px dotted white; height: 2em"></div></td>
+            <td class="team-name">Reserve</td>
+            <td class="team-drivers" id="reserve-drivers"></td>
+            <td class="team-drivers-pp" id="reserve-drivers-pp"></td>
+        </tr>
+    `
+
+    const reserve_spot = document.getElementById('reserve-drivers')
+    const reserve_pp = document.getElementById('reserve-drivers-pp')
+    let reserve_count = 0
+    for (const i in drivers) {
+        const driver = drivers[i]
+        if (driver['team-id'] !== -1) {
+            continue
+        }
+
+        reserve_spot.innerHTML += `<p class="team-driver">${driver['name']}</p>`
+        reserve_pp.innerHTML += `<p class="driver-pp">${driver['penalty-points']}</p>`
+        reserve_count++
+    }
+
+    document.getElementById('reserve-border').style.height = `${reserve_count * 1.5}em`
+
     greyOutNames()
     greyOutPP()
 }
