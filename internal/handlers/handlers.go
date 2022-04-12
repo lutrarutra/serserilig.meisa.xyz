@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository/dbrepo"
 	"io/ioutil"
@@ -12,6 +13,7 @@ import (
 
 // Repo the repository used by the handlers
 var Repo *Repository
+var templateData = &models.TemplateData{}
 
 // Repository is the repository type
 type Repository struct {
