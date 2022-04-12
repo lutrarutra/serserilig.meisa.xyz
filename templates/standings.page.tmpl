@@ -19,6 +19,7 @@
 
                     {{range $index, $driver := .Drivers}}
                         {{$teamColor := index $teamColors $driver.TeamID}}
+                        {{if ne $driver.ID -1}}
                         <tr>
                             <th class="driver-pos">{{add $index 1}}</th>
                             <td class="driver-team-color">
@@ -31,6 +32,7 @@
                             <td class="driver-name">{{$driver.Name}}</td>
                             <td class="driver-points">{{$driver.Points}}</td>
                         </tr>
+                        {{end}}
                     {{end}}
 
                     </tbody>
