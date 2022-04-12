@@ -21,24 +21,49 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Grid(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "grid.page.tmpl", &models.TemplateData{})
+	templateData.GetDrivers()
+	templateData.GetTeams()
+
+	dataMap := make(map[string]interface{})
+	driversByID := make(map[int]models.Driver)
+	for _, driver := range templateData.Drivers {
+		driversByID[driver.ID] = driver
+	}
+
+	dataMap["drivers_by_id"] = driversByID
+
+	templateData.Data = dataMap
+
+	render.Template(w, r, "grid.page.tmpl", templateData)
 }
 
 func (m *Repository) Rules(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "rules.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "rules.page.tmpl", templateData)
 }
 
 func (m *Repository) Staff(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "staff.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "staff.page.tmpl", templateData)
 }
 
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{})
+	templateData.GetDrivers()
+	templateData.GetTeams()
+
+	dataMap := make(map[string]interface{})
+	teamColors := make(map[int]string)
+	for _, team := range templateData.Teams {
+		teamColors[team.ID] = team.Color
+	}
+	dataMap["team_colors"] = teamColors
+
+	templateData.Data = dataMap
+
+	render.Template(w, r, "standings.page.tmpl", templateData)
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "home.page.tmpl", templateData)
 }

@@ -19,6 +19,37 @@
                     </tr>
                     </thead>
                     <tbody id="team-list">
+                    {{$driverNames := index .Data "driver_names"}}
+                    {{range .Teams}}
+                        {{$driver1 := index $driverNames .Driver1}}
+                        {{$driver2 := index $driverNames .Driver2}}
+                        <tr>
+                            <td class="team-name align-middle">
+                                <div style="border-left: 3px solid {{.Color}}; height: 1.5em; margin: 0 2em">
+                                    {{.Name}}
+                                </div>
+                            </td>
+                            <td class="team-points">
+                                <input
+                                        class="form-control bg-dark border-secondary text-white text-center"
+                                        type="number"
+                                        value="{{.Points}}"
+                                        id="points-{{.ID}}"
+                                        disabled
+                                >
+                            </td>
+                            <td class="team-driver1" style="border-left: 2px solid white">
+                                <div class="driver-box" id="team-{{.ID}}-driver1">
+                                    {{$driver1}}
+                                </div>
+                            </td>
+                            <td class="team-driver2">
+                                <div class="driver-box" id="team-{{.ID}}-driver2">
+                                    {{$driver2}}
+                                </div>
+                            </td>
+                        </tr>
+                    {{end}}
                     </tbody>
                 </table>
             </div>
@@ -31,7 +62,16 @@
                     </tr>
                     </thead>
                     <tbody id="driver-list">
-
+                    {{$reserveDrivers := index .Data "reserve_drivers"}}
+                    {{range $reserveDrivers}}
+                        <tr>
+                            <td class="driver-name">
+                                <div class="driver-box reserve-driver">
+                                    {{.}}
+                                </div>
+                            </td>
+                        </tr>
+                    {{end}}
                     </tbody>
                 </table>
             </div>
@@ -77,23 +117,38 @@
 
     <script>
         const user_ip = '{{index .StringMap "remote_ip"}}'
+        greyOutNames()
 
-        const drivers = JSON.parse('{{index .StringMap "drivers"}}')
-        let driver_ids = {'-1': 'No Driver'}
-        for (const index in drivers) {
-            const driver = drivers[index]
-            driver_ids[driver['id'].toString()] = driver['name']
+        const driver_names = {
+            {{$driverNames := index .Data "driver_names"}}
+            {{range $key, $name := $driverNames}}
+                '{{$key}}': {{$name}},
+            {{end}}
         }
-        let driver_names = {}
-        for (const index in driver_ids) {
-            const driver_name = driver_ids[index]
-            driver_names[driver_name] = index.toString()
+        let driver_ids = {}
+        for (const index in driver_names) {
+            const driver_id = driver_names[index]
+            driver_ids[driver_id] = index.toString()
         }
 
-        const teams = JSON.parse('{{index .StringMap "teams"}}')
-
-        buildTeamTable()
-        const reserve_driver_cache = buildDriverTable()
+        const teams = [
+            {{range .Teams}}
+            {
+                'id': {{.ID}},
+                'points': {{.Points}},
+                'driver1': {{.Driver1}},
+                'driver2': {{.Driver2}},
+            },
+            {{end}}
+        ]
+        const reserve_driver_cache = [
+            {{$reserveDrivers := index .Data "reserve_drivers"}}
+            {{range $reserveDrivers}}
+            {{.}},
+            {{end}}
+        ]
+        console.log('driver names:', driver_names)
+        console.log('driver ids:', driver_ids)
 
     </script>
 {{end}}

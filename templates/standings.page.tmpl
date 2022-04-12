@@ -3,6 +3,7 @@
 {{define "content"}}
 
     <div class="container">
+        {{$teamColors := index .Data "team_colors"}}
         <div class="row">
             <div class="driver-standings col" id="driver-standings-div">
                 <table class="table table-dark table-striped align-middle">
@@ -15,6 +16,25 @@
                     </tr>
                     </thead>
                     <tbody id="driver-standings">
+
+                    {{range $index, $driver := .Drivers}}
+                        {{$teamColor := index $teamColors $driver.TeamID}}
+                        {{if ne $driver.ID -1}}
+                        <tr>
+                            <th class="driver-pos">{{add $index 1}}</th>
+                            <td class="driver-team-color">
+                                {{if eq $driver.TeamID -1}}
+                                    <div style="border-left: 3px dotted white; height: 2em"></div>
+                                {{else}}
+                                    <div style="border-left: 3px solid {{$teamColor}}; height: 2em"></div>
+                                {{end}}
+                            </td>
+                            <td class="driver-name">{{$driver.Name}}</td>
+                            <td class="driver-points">{{$driver.Points}}</td>
+                        </tr>
+                        {{end}}
+                    {{end}}
+
                     </tbody>
                 </table>
             </div>
@@ -31,6 +51,19 @@
                     </tr>
                     </thead>
                     <tbody id="team-standings">
+
+                    {{range $index, $team := .Teams}}
+                        <tr>
+                            <th scope="row" class="team-pos">{{add $index 1}}</th>
+                            <td class="team-logo">
+                                <img src="/static/images/team_logos/{{$team.Abbreviation}}.png" alt="{{$team.Abbreviation}}">
+                            </td>
+                            <td class="team-color"><div style="border-left: 3px solid {{$team.Color}}; height: 2em"></div></td>
+                            <td class="team-name">{{$team.Name}}</td>
+                            <td class="team-points">{{$team.Points}}</td>
+                        </tr>
+                    {{end}}
+
                     </tbody>
                 </table>
             </div>
@@ -73,13 +106,6 @@
             width: 10%
         }
 
-        /*.driver-standings {*/
-        /*    border-right: 1px solid lightgray;*/
-        /*}*/
-        /*.team-standings {*/
-        /*    border-left: 1px solid lightgray;*/
-        /*}*/
-
         .driver-team-color {
             width: 3px
         }
@@ -94,33 +120,10 @@
 
 {{define "js"}}
 
-    <script src="/static/js/public/standings.js"></script>
-
     <script>
         activateNav('nav-standings')
 
         const is_mobile = window.matchMedia("only screen and (max-width: 768px)").matches
-
-        const teams = JSON.parse({{index .StringMap "teams"}})
-        const teams_by_id = {}
-        for (const index in teams) {
-            const team = teams[index]
-            teams_by_id[team['id'].toString()] = team
-        }
-
-        const drivers = JSON.parse({{index .StringMap "drivers"}})
-
-        for (const team_name in teams) {
-            const team = teams[team_name]
-            for (const index in team["driverIDs"]) {
-                const driver_id = team["driverIDs"][index]
-                drivers[driver_id]["team"] = team_name
-                drivers[driver_id]["team_abr"] = team['abr']
-            }
-        }
-        
-        buildDriverStandings()
-        buildTeamStandings()
 
         if (!(is_mobile)) {
             const border_style = '1px solid lightgray'
