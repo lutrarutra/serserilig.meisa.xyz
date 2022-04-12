@@ -51,7 +51,7 @@ function updateReserveDrivers() {
             }
         })
 
-    // setTimeout(() => {location.reload()}, 2000)
+    setTimeout(() => {location.reload()}, 2000)
 }
 
 function showSaveBanner() {
