@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
+	"log"
 	"net/http"
 )
 
@@ -33,7 +34,28 @@ func (m *Repository) Staff(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{})
+	drivers, err := m.DB.QueryAllDrivers()
+	if err != nil {
+		log.Println(err)
+	}
+
+	teams, err := m.DB.QueryAllTeams()
+	if err != nil {
+		log.Println(err)
+	}
+
+	dataMap := make(map[string]interface{})
+	teamColors := make(map[int]string)
+	for _, team := range teams {
+		teamColors[team.ID] = team.Color
+	}
+	dataMap["team_colors"] = teamColors
+
+	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{
+		Drivers: drivers,
+		Teams: teams,
+		Data: dataMap,
+	})
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {

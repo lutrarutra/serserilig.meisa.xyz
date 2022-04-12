@@ -4,16 +4,16 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/funcs"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/network"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
 )
 
-var functions = template.FuncMap{}
+var functions = funcs.Functions
 
 var app *config.AppConfig
 
@@ -25,18 +25,8 @@ func NewRenderer(a *config.AppConfig) {
 // AddDefaultData adds data for all templates
 func AddDefaultData(data *models.TemplateData, r *http.Request) *models.TemplateData {
 	stringMap := make(map[string]string)
-	drivers, err := ioutil.ReadFile("./static/json/drivers.json")
-	if err == nil {
-		stringMap["drivers"] = string(drivers)
-	} else {
-		fmt.Println(err)
-	}
-
-	teams, err := ioutil.ReadFile("./static/json/teams.json")
-	if err == nil {
-		stringMap["teams"] = string(teams)
-	} else {
-		fmt.Println(err)
+	if data.StringMap != nil {
+		stringMap = data.StringMap
 	}
 
 	stringMap["remote_ip"] = network.GetRealIP(r)
