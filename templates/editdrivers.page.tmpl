@@ -17,7 +17,39 @@
                 </tr>
                 </thead>
                 <tbody id="driver-list">
-
+                {{range .Drivers}}
+                    <tr>
+                        <td class="driver-name">{{.Name}}</td>
+                        <td class="driver-points">
+                            <input
+                                    class="form-control bg-dark border-secondary text-white text-center"
+                                    type="number"
+                                    value="{{.Points}}"
+                                    id="points-{{.ID}}"
+                                    disabled
+                            >
+                        </td>
+                        <td class="driver-penalty-points">
+                            <input
+                                    class="form-control bg-dark border-secondary text-white text-center"
+                                    type="number"
+                                    value="{{.PenaltyPoints}}"
+                                    id="penalty-points-{{.ID}}"
+                                    disabled
+                            >
+                        </td>
+                        <td>
+                            <button
+                                    class="btn btn-danger driver-del"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteDriverModal"
+                                    onclick="deleteModal('{{.Name}}', '{{.ID}}')"
+                                    hidden>
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                {{end}}
                 </tbody>
             </table>
         </div>
@@ -76,9 +108,6 @@
         .driver-penalty-points {
             width: 25%
         }
-        .add-driver-button {
-            margin-bottom: 3em;
-        }
     </style>
 {{end}}
 
@@ -88,10 +117,15 @@
 
     <script>
         const user_ip = '{{index .StringMap "remote_ip"}}'
-        const drivers = JSON.parse('{{index .StringMap "drivers"}}')
-        const teams = JSON.parse('{{index .StringMap "teams"}}')
-
-        buildDriverTable()
+        const teams = [
+            {{range .Teams}}
+            {
+                'id': {{.ID}},
+                'driver1': {{.Driver1}},
+                'driver2': {{.Driver2}}
+            },
+            {{end}}
+        ]
 
         const enter_button = 13
         document.getElementById('add-driver-name')

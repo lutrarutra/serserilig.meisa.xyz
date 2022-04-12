@@ -6,10 +6,14 @@ import (
 )
 
 func (m *Repository) EditDrivers(w http.ResponseWriter, r *http.Request) {
+	templateData.GetDrivers()
+	templateData.GetTeams()
 	render.Template(w, r, "editdrivers.page.tmpl", templateData)
 }
 
 func (m *Repository) EditTeams(w http.ResponseWriter, r *http.Request) {
+	templateData.GetDrivers()
+	templateData.GetTeams()
 	render.Template(w, r, "editteams.page.tmpl", templateData)
 }
 
