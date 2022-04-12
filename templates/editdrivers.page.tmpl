@@ -18,6 +18,7 @@
                 </thead>
                 <tbody id="driver-list">
                 {{range .Drivers}}
+                    {{if ne .ID -1}}
                     <tr>
                         <td class="driver-name">{{.Name}}</td>
                         <td class="driver-points">
@@ -49,6 +50,7 @@
                             </button>
                         </td>
                     </tr>
+                    {{end}}
                 {{end}}
                 </tbody>
             </table>
