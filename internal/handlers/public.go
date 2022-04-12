@@ -22,7 +22,34 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Grid(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "grid.page.tmpl", &models.TemplateData{})
+	drivers, err := m.DB.QueryAllDrivers()
+	if err != nil {
+		log.Println(err)
+	}
+	noDriver := models.Driver{
+		ID: -1,
+		Name: "No Driver",
+		PenaltyPoints: 0,
+	}
+	drivers = append(drivers, noDriver)
+
+	teams, err := m.DB.QueryAllTeams()
+	if err != nil {
+		log.Println(err)
+	}
+
+	dataMap := make(map[string]interface{})
+	driversByID := make(map[int]models.Driver)
+	for _, driver := range drivers {
+		driversByID[driver.ID] = driver
+	}
+
+	dataMap["drivers_by_id"] = driversByID
+
+	render.Template(w, r, "grid.page.tmpl", &models.TemplateData{
+		Teams: teams,
+		Data: dataMap,
+	})
 }
 
 func (m *Repository) Rules(w http.ResponseWriter, r *http.Request) {
