@@ -36,7 +36,7 @@
             <tr>
                 {{$reserves := index .Data "reserve_drivers"}}
                 <td class="team-logo"></td>
-                <td class="team-color"><div style="border-left: 3px dotted white; height: 2em"></div></td>
+                <td class="team-color"><div id="reserve_border" style="border-left: 3px dotted white"></div></td>
                 <td class="team-name">Reserve Drivers</td>
                 <td class="team-drivers">
                     {{range $reserves}}
@@ -84,6 +84,9 @@
     
     <script>
         activateNav('nav-grid')
+
+        const border_height = {{index .IntMap "reserve_count"}} * 1.5
+        document.getElementById('reserve_border').style.height = `${border_height}em`
 
         greyOutNames()
         greyOutPP()

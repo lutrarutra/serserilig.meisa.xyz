@@ -41,6 +41,7 @@ func (m *Repository) Grid(w http.ResponseWriter, r *http.Request) {
 	intMap["reserve_count"] = len(reserveDrivers)
 
 	templateData.Data = dataMap
+	templateData.IntMap = intMap
 
 	render.Template(w, r, "grid.page.tmpl", templateData)
 }
