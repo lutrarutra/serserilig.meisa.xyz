@@ -33,6 +33,22 @@
                     </td>
                 </tr>
             {{end}}
+            <tr>
+                {{$reserves := index .Data "reserve_drivers"}}
+                <td class="team-logo"></td>
+                <td class="team-color"><div style="border-left: 3px dotted white; height: 2em"></div></td>
+                <td class="team-name">Reserve Drivers</td>
+                <td class="team-drivers">
+                    {{range $reserves}}
+                        <p class="team-driver">{{.Name}}</p>
+                    {{end}}
+                </td>
+                <td class="team-driver-pp">
+                    {{range $reserves}}
+                        <p class="driver-pp">{{.PenaltyPoints}}</p>
+                    {{end}}
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

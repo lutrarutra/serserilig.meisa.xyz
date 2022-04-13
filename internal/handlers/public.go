@@ -26,11 +26,19 @@ func (m *Repository) Grid(w http.ResponseWriter, r *http.Request) {
 
 	dataMap := make(map[string]interface{})
 	driversByID := make(map[int]models.Driver)
+	var reserveDrivers []models.Driver
 	for _, driver := range templateData.Drivers {
+		if driver.TeamID == -1 {
+			reserveDrivers = append(reserveDrivers, driver)
+		}
 		driversByID[driver.ID] = driver
 	}
 
 	dataMap["drivers_by_id"] = driversByID
+	dataMap["reserve_drivers"] = reserveDrivers
+
+	intMap := make(map[string]int)
+	intMap["reserve_count"] = len(reserveDrivers)
 
 	templateData.Data = dataMap
 
