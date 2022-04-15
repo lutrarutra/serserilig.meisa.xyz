@@ -3,6 +3,15 @@
 {{define "content"}}
     {{$driversByID := index .Data "drivers_by_id"}}
     <div class="container">
+        <div class="row">
+            <h5><a href="/rules">Rule 3.2</a></h5>
+            <ul>
+                <li>If you accumulate <strong>25 points</strong>, you will serve a <strong>qualifying ban.</strong></li>
+                <li>If you accumulate <strong>50 points</strong>, you will serve a <strong>one-race ban.</strong></li>
+                <li>If you accumulate <strong>60 points</strong>, your league position will be put under review.</li>
+            </ul>
+        </div>
+
         <table class="table table-dark table-striped align-middle">
             <thead>
             <tr>
