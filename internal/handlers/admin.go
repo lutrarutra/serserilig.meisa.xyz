@@ -26,6 +26,10 @@ func (m *Repository) EditTeams(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dataMap := make(map[string]interface{})
+	
+	dataMap["driver_names"] = driverNames
+	dataMap["reserve_drivers"] = reserveDrivers
+	templateData.Data = dataMap
 
 	render.Template(w, r, "editteams.page.tmpl", templateData)
 }
