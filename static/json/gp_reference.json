@@ -1,0 +1,146 @@
+[
+    {
+        "id":1,
+        "country": "United Arab Emirates",
+        "flag-name": "/static/images/flags/are.svg",
+        "circuit": "Yas Marina Circuit"
+    },
+    {
+        "id":2,
+        "country": "Australia",
+        "flag-name": "/static/images/flags/aus.svg",
+        "circuit": "Adelaide Street Circuit"
+    },
+    {
+        "id":3,
+        "country": "Austria",
+        "flag-name": "/static/images/flags/aut.svg",
+        "circuit": "Red Bull Ring"
+    },
+    {
+        "id":4,
+        "country": "Canada",
+        "flag-name": "/static/images/flags/can.svg",
+        "circuit": "Circuit Gilles-Villeneuve"
+    },
+    {
+        "id":5,
+        "country": "Brazil",
+        "flag-name": "/static/images/flags/bra.svg",
+        "circuit": "Autodromo José Carlos Pace"
+    },
+    {
+        "id":6,
+        "country": "Portugal",
+        "flag-name": "/static/images/flags/prt.svg",
+        "circuit": "Algarve International Circuit"
+    },
+    {
+        "id":7,
+        "country": "Italy",
+        "flag-name": "/static/images/flags/ita.svg",
+        "circuit": "Autodromo Enzo e Dino Ferrari"
+    },
+    {
+        "id":8,
+        "country": "Mexico",
+        "flag-name": "/static/images/flags/mex.svg",
+        "circuit": "Autódromo Hermanos Rodríguez"
+    },
+    {
+        "id":9,
+        "country": "Bahrain",
+        "flag-name": "/static/images/flags/bhr.svg",
+        "circuit": "Bahrain International Circuit"
+    },
+    {
+        "id":10,
+        "country": "Italy",
+        "flag-name": "/static/images/flags/ita.svg",
+        "circuit": "Autodromo Nazionale di Monza "
+    },
+    {
+        "id":11,
+        "country": "Azerbaijan",
+        "flag-name": "/static/images/flags/aze.svg",
+        "circuit": "Baku City Circuit"
+    },
+    {
+        "id":12,
+        "country": "Japan",
+        "flag-name": "/static/images/flags/jpn.svg",
+        "circuit": "Suzuka International Racing Course"
+    },
+    {
+        "id":13,
+        "country": "Spain",
+        "flag-name": "/static/images/flags/esp.svg",
+        "circuit": "Circuit de Barcelona-Catalunya"
+    },
+    {
+        "id":14,
+        "country": "Monaco",
+        "flag-name": "/static/images/flags/mco.svg",
+        "circuit": "Circuit de Monaco"
+    },
+    {
+        "id":15,
+        "country": "United Kingdom",
+        "flag-name": "/static/images/flags/gbr.svg",
+        "circuit": "Silverstone Circuit"
+    },
+    {
+        "id":16,
+        "country": "Belgium",
+        "flag-name": "/static/images/flags/bel.svg",
+        "circuit": "Circuit de Spa-Francorchamps"
+    },
+    {
+        "id":17,
+        "country": "United States",
+        "flag-name": "/static/images/flags/usa.svg",
+        "circuit": "Miami International Autodrome"
+    },
+    {
+        "id":18,
+        "country": "United States",
+        "flag-name": "/static/images/flags/usa.svg",
+        "circuit": "Circuit of the Americas"
+    },
+    {
+        "id":19,
+        "country": "France",
+        "flag-name": "/static/images/flags/fra.svg",
+        "circuit": "Circuit Paul Ricard"
+    },
+    {
+        "id":20,
+        "country": "Netherlands",
+        "flag-name": "/static/images/flags/nld.svg",
+        "circuit": "Circuit Zandvoort"
+    },
+    {
+        "id":21,
+        "country": "Hungary",
+        "flag-name": "/static/images/flags/hun.svg",
+        "circuit": "Hungaroring"
+    },
+    {
+        "id":22,
+        "country": "Saudi Arabia",
+        "flag-name": "/static/images/flags/sau.svg",
+        "circuit": "Jeddah Corniche Circuit"
+    },
+    {
+        "id":23,
+        "country": "Singapore",
+        "flag-name": "/static/images/flags/sgp.svg",
+        "circuit": "Marina Bay Street Circuit"
+    },
+    {
+        "id":24,
+        "country": "China",
+        "flag-name": "/static/images/flags/chn.svg",
+        "circuit": "Shanghai International Circuit"
+    }
+]

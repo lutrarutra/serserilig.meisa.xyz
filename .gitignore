@@ -2,3 +2,5 @@
 db/
 static/json/drivers.json
 static/json/teams.json
+static/json/calendar.json
+.DS_Store
