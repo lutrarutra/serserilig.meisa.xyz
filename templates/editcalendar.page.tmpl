@@ -1,0 +1,139 @@
+{{template "admin" .}}
+
+<!-- <head>
+    <style>
+        .horizontal-scrollable>.row {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .horizontal-scrollable>.row>.col {
+            display: inline-block;
+            float: none;
+        }
+    </style>
+
+</head> -->
+
+{{define "content"}}
+<div class="container">
+    <div class="pb-3">
+        {{range $index, $race := .Races}}
+        <div class="row w-100 py-2">
+                <div class="col-1 align-self-center">
+                    <button class="btn btn-danger" onclick="deleteRace('{{$race.ID}}')">Delete</button>
+                </div>
+                <div class="col-2 text-start align-self-center">
+                    <input class="form-control" type="date" id="date-select-{{$race.ID}}" name='from' size='9' value="{{$race.Date}}" />
+                </div>
+                <div class="col-2 text-start align-self-center">
+                    <input class="form-control" type="time" id="time-select-{{$race.ID}}" name='from' size='9' value="{{$race.Time}}" />
+                </div>
+                <div class="col-1 align-self-center">
+                    <button class="btn btn-primary" onclick="updateRace('{{$race.ID}}')">Update</button>
+                </div>
+                <div class="col-1 align-self-center"><img src="{{.Gp.FlagName}}" height="20px" width="30px"></div>
+                <div class="col-2 text-start text-wrap align-self-center">{{$race.Gp.Country}}</div>
+                <div class="col-3 text-start text-wrap align-self-center">{{$race.Gp.Circuit}}</div>
+        </div>
+        {{end}}
+    </div>
+
+    <div class="alert bg-success mt-4" id="saved-alert" hidden>Saved!</div>
+    <div class="row justify-content-between">
+        <div class="col-5 align-self-center">
+            <select class="form-control form-control" id="gp-select">
+                {{range .GPs}}
+                <option value="{{.ID}}">
+                    {{.Country}} - {{.Circuit}}
+                </option>
+                {{end}}
+            </select>
+        </div>
+        
+        <div class="col-3">
+            <input class="form-control" type="date" id="date-select" name='from' size='9' value="" />
+        </div>   
+        <div class="col-3">
+            <input class="form-control" type="time" id="time-select" name='from' size='9' value="" />
+        </div>
+        <div class="col-1 align-self-center">
+            <button type="submit" class="btn btn-primary" onclick="addRace()">Add</button>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "css"}}
+<style>
+    .driver-name {
+        width: 50%
+    }
+
+    .driver-points {
+        width: 25%
+    }
+
+    .driver-penalty-points {
+        width: 25%
+    }
+</style>
+{{end}}
+
+{{define "js"}}
+
+<script>
+
+    function addRace() {
+        const user_ip = '{{index .StringMap "remote_ip"}}'
+        const gp_input = document.getElementById('gp-select');
+        const date_input = document.getElementById('date-select');
+        const time_input = document.getElementById('time-select');
+        console.log(date_input.value);
+        console.log(time_input.value);
+        const url = '/api/races/add?gp_id=' + gp_input.value + '&date=' + date_input.value + '&time=' + time_input.value +  '&ip=' + user_ip;
+        fetch(url).then(function(response) {
+            // console.log(response)
+            return response;
+        }).then(function(data) {
+            // console.log(data);
+        })
+
+        document.getElementById('saved-alert').removeAttribute('hidden');
+        setTimeout(() => {location.reload()}, 1000);
+    }
+
+    function deleteRace(id) {
+        // document.getElementById('delete-success').removeAttribute('hidden')
+        const user_ip = '{{index .StringMap "remote_ip"}}'
+        const del_url = '/api/races/delete?id=' + id + '&ip=' + user_ip
+        fetch(del_url)
+            .then((response) => {
+                return response
+            }).then((data) => {
+            console.log(data)
+        })
+        setTimeout(() => {location.reload()}, 1000);
+    }
+
+    function updateRace(id) {
+        const user_ip = '{{index .StringMap "remote_ip"}}'
+        const date_input = document.getElementById('date-select-' + id);
+        const time_input = document.getElementById('time-select-' + id);
+        console.log(id);
+        console.log(date_input.value);
+        console.log(time_input.value);
+        const url = '/api/races/update?id=' + id + '&date=' + date_input.value + '&time=' + time_input.value +  '&ip=' + user_ip;
+        fetch(url).then(function(response) {
+            // console.log(response)
+            return response;
+        }).then(function(data) {
+            // console.log(data);
+        })
+
+        document.getElementById('saved-alert').removeAttribute('hidden');
+        setTimeout(() => {location.reload()}, 1000);
+    }
+</script>
+
+{{end}}

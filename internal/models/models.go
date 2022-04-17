@@ -28,10 +28,17 @@ type RaceResult struct {
 	DNF      bool   `json:"dnf"`
 }
 
+type GrandPrix struct {
+	ID       int    `json:"id"`
+	Country  string `json:"country"`
+	FlagName string `json:"flag-name"`
+	Circuit  string `json:"circuit"`
+}
+
 type Race struct {
-	ID       int          `json:"id"`
-	Country  string       `json:"country"`
-	FlagName string       `json:"flag-name"`
-	Circuit  string       `json:"circuit"`
-	Results  []RaceResult `json:"results"`
+	ID      int          `json:"id"`
+	Gp      GrandPrix    `json:"gp"`
+	Date    string       `json:"date"`
+	Time    string       `json:"time"`
+	Results []RaceResult `json:"results"`
 }

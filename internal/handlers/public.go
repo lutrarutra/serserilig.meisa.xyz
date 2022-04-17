@@ -1,9 +1,10 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
-	"net/http"
 )
 
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
@@ -75,4 +76,12 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
 	render.Template(w, r, "home.page.tmpl", templateData)
+}
+
+func (m *Repository) Calendar(w http.ResponseWriter, r *http.Request) {
+	// templateData.GetDrivers()
+	templateData.GetRaces()
+
+	// send the data to the template
+	render.Template(w, r, "calendar.page.tmpl", templateData)
 }

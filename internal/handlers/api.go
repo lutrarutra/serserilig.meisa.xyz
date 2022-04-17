@@ -3,13 +3,160 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/network"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/network"
 )
+
+func (m *Repository) AddRace(w http.ResponseWriter, r *http.Request) {
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
+		return
+	}
+
+	gp_id_raw, ok := r.URL.Query()["gp_id"]
+	if !ok || len(gp_id_raw) < 1 {
+		log.Println("GP id not ok")
+		w.Write([]byte("GP id not ok"))
+		return
+	}
+
+	date_raw, ok := r.URL.Query()["date"]
+	if !ok || len(date_raw) < 1 {
+		log.Println("Date not ok")
+		w.Write([]byte("Date not ok"))
+		return
+	}
+
+	time_raw, ok := r.URL.Query()["time"]
+	if !ok || len(date_raw) < 1 {
+		log.Println("Time not ok")
+		w.Write([]byte("Time not ok"))
+		return
+	}
+
+	var gps []models.GrandPrix
+
+	gp_file, err := ioutil.ReadFile("./static/json/gp_reference.json")
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(gp_file, &gps)
+	if err != nil {
+		return
+	}
+
+	gp_id, _ := strconv.Atoi(gp_id_raw[0])
+	gp := gps[gp_id-1]
+
+	newRace := models.Race{
+		Date: date_raw[0],
+		Time: time_raw[0],
+		Gp:   gp,
+	}
+
+	err = m.DB.InsertRace(newRace)
+
+	if err != nil {
+		log.Println(err)
+		w.Write([]byte(fmt.Sprint(err)))
+		return
+	}
+
+	m.UpdateCalendarJSON()
+	w.Write([]byte("Added Race"))
+	log.Println("Added Race")
+}
+
+func (m *Repository) DeleteRace(w http.ResponseWriter, r *http.Request) {
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
+		return
+	}
+
+	raceId, ok := r.URL.Query()["id"]
+	if !ok || len(raceId) < 1 {
+		w.Write([]byte("id not ok"))
+		return
+	}
+
+	if _, err := strconv.Atoi(raceId[0]); err != nil {
+		w.Write([]byte("Invalid ID param"))
+		return
+	}
+
+	err := m.DB.DeleteRace(raceId[0])
+	if err != nil {
+		log.Println(err)
+		w.Write([]byte(fmt.Sprint(err)))
+		return
+	}
+
+	m.UpdateCalendarJSON()
+	w.Write([]byte("Deleted Race"))
+	log.Println("Deleted Race")
+}
+
+func (m *Repository) UpdateRace(w http.ResponseWriter, r *http.Request) {
+	if !checkIP(r) {
+		w.Write([]byte("Invalid IP"))
+	}
+
+	id_raw, ok := r.URL.Query()["id"]
+	if !ok || len(id_raw) < 1 {
+		log.Println("ID not ok")
+		w.Write([]byte("ID not ok"))
+		return
+	}
+
+	date_raw, ok := r.URL.Query()["date"]
+	if !ok || len(date_raw) < 1 {
+		log.Println("Date not ok")
+		w.Write([]byte("Date not ok"))
+		return
+	}
+
+	time_raw, ok := r.URL.Query()["time"]
+	if !ok || len(date_raw) < 1 {
+		log.Println("Time not ok")
+		w.Write([]byte("Time not ok"))
+		return
+	}
+	log.Println(date_raw[0])
+	log.Println(time_raw[0])
+
+	err := m.DB.UpdateRace(id_raw[0], date_raw[0], time_raw[0])
+
+	if err != nil {
+		w.Write([]byte(fmt.Sprint(err)))
+	}
+
+	m.UpdateCalendarJSON()
+	log.Println("Race Updated!")
+}
+
+func (m *Repository) GetAllRaces(w http.ResponseWriter, r *http.Request) {
+	m.DB.CreateCalendarTable()
+
+	races, err := m.DB.QueryAllRaces()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	racesJSON, err := json.Marshal(races)
+	if err != nil {
+		log.Fatal("Could not convert to JSON:", err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, _ = w.Write(racesJSON)
+}
 
 func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 	if !checkIP(r) {

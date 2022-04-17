@@ -2,13 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"log"
+
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/dbDriver"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository"
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository/dbrepo"
-	"io/ioutil"
-	"log"
 )
 
 // Repo the repository used by the handlers
@@ -18,14 +19,14 @@ var templateData = &models.TemplateData{}
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
-	DB repository.DatabaseRepo
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
 func NewRepo(a *config.AppConfig, db *dbDriver.DB) *Repository {
 	return &Repository{
 		App: a,
-		DB: dbrepo.NewSqliteRepo(db.SQL, a),
+		DB:  dbrepo.NewSqliteRepo(db.SQL, a),
 	}
 }
 
@@ -34,7 +35,24 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
-func(m *Repository) UpdateDriverJSON() {
+func (m *Repository) UpdateCalendarJSON() {
+	races, err := m.DB.QueryAllRaces()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	calendarJSON, err := json.MarshalIndent(races, "", "	")
+	if err != nil {
+		log.Fatal("Could not convert to JSON:", err)
+	}
+
+	err = ioutil.WriteFile("./static/json/calendar.json", calendarJSON, 0644)
+	if err != nil {
+		log.Println("Could not write to file")
+	}
+}
+
+func (m *Repository) UpdateDriverJSON() {
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
 		log.Fatal(err)
@@ -51,7 +69,7 @@ func(m *Repository) UpdateDriverJSON() {
 	}
 }
 
-func(m *Repository) UpdateTeamJSON() {
+func (m *Repository) UpdateTeamJSON() {
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
 		log.Fatal(err)

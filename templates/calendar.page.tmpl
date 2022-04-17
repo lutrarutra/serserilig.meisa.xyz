@@ -1,0 +1,33 @@
+{{template "base" .}}
+
+<!-- <head>
+    <style>
+        .horizontal-scrollable>.row {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .horizontal-scrollable>.row>.col {
+            display: inline-block;
+            float: none;
+        }
+    </style>
+</head> -->
+
+{{define "content"}}
+<div class="container">
+    <div class="row">
+        {{range $index, $race := .Races}}
+        <div class="col p-5">
+            <div class="pb-2">{{add $index 1}}.</div>
+            <div class="pb-2 text-nowrap">{{$race.Date}}</div>
+            <div class="pb-2">{{$race.Time}}</div>
+            <div class="pb-2"><img src="{{.Gp.FlagName}}" height="20px" width="30px"></div>
+            <div class="pb-2 text-wrap">{{$race.Gp.Country}}</div>
+            <div class="pb-2 text-wrap">{{$race.Gp.Circuit}}</div>
+        </div>
+        {{end}}
+    </div>
+</div>
+
+{{end}}

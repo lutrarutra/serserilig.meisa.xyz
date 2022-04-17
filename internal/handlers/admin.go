@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
 	"net/http"
+
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/render"
 )
 
 func (m *Repository) EditDrivers(w http.ResponseWriter, r *http.Request) {
@@ -14,7 +15,7 @@ func (m *Repository) EditDrivers(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) EditTeams(w http.ResponseWriter, r *http.Request) {
 	templateData.GetDrivers()
 	templateData.GetTeams()
-
+	
 	driverNames := make(map[int]string)
 	var reserveDrivers []string
 	for _, driver := range templateData.Drivers {
@@ -25,12 +26,19 @@ func (m *Repository) EditTeams(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dataMap := make(map[string]interface{})
-
+	
 	dataMap["driver_names"] = driverNames
 	dataMap["reserve_drivers"] = reserveDrivers
 	templateData.Data = dataMap
 
 	render.Template(w, r, "editteams.page.tmpl", templateData)
+}
+
+func (m *Repository) EditCalendar(w http.ResponseWriter, r *http.Request) {
+	templateData.GetRaces()
+	templateData.GetGrandPrixes()
+
+	render.Template(w, r, "editcalendar.page.tmpl", templateData)
 }
 
 func (m *Repository) Edit(w http.ResponseWriter, r *http.Request) {

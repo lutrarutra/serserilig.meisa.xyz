@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 	"io/ioutil"
 	"log"
 	"time"
+
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
 )
 
 func (m *sqliteDBRepo) CreateDriverTable() error {
@@ -19,6 +20,137 @@ func (m *sqliteDBRepo) CreateDriverTable() error {
 	}
 
 	return nil
+}
+
+func (m *sqliteDBRepo) CreateCalendarTable() error {
+	statement := `create table if not exists races (id integer primary key not null, gp_id integer, race_date TEXT, race_time TEXT)`
+
+	_, err := m.DB.Exec(statement)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) InsertRace(race models.Race) error {
+	err := m.CreateCalendarTable()
+	if err != nil {
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	// statement := fmt.Sprintf(`select name from races where ID='%d'`, race.ID)
+
+	// rows, err := m.DB.QueryContext(ctx, statement)
+	// if err != nil {
+	// 	return err
+	// }
+
+	// for rows.Next() {
+	// 	return nil
+	// }
+
+	statement := `insert into races (gp_id, race_date, race_time) values ($1, $2, $3)`
+	_, err = m.DB.ExecContext(ctx, statement, race.Gp.ID, race.Date, race.Time)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) DeleteRace(raceId string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := fmt.Sprintf(`delete from races where id=%v`, raceId)
+
+	_, err := m.DB.ExecContext(ctx, statement)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) UpdateRace(id, date, race_time string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	// statement := fmt.Sprintf(`update races set race_date=%v where ID=%v`, date, id)
+
+	statement := `update races set race_date=$1, race_time=$2 where ID=$3`
+	_, err := m.DB.ExecContext(ctx, statement, date, race_time, id)
+
+	if err != nil {
+		log.Println("Updating race failed")
+		return err
+	}
+
+	// statement = fmt.Sprintf(`update races set race_time=%v where ID=%v`, race_time, id)
+
+	// _, err = m.DB.ExecContext(ctx, statement)
+	// if err != nil {
+	// 	log.Println("Error updating race time")
+	// 	return err
+	// }
+
+	return nil
+}
+
+func (m *sqliteDBRepo) QueryAllRaces() ([]models.Race, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := `select * from races order by race_date asc`
+
+	rows, err := m.DB.QueryContext(ctx, statement)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var races []models.Race
+	var gps []models.GrandPrix
+
+	rawFile, err := ioutil.ReadFile("./static/json/gp_reference.json")
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = json.Unmarshal(rawFile, &gps)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	for rows.Next() {
+		var gp_id int
+		var date string
+		var time string
+		var ID int
+
+		err = rows.Scan(&ID, &gp_id, &date, &time)
+
+		newRace := models.Race{
+			ID:   ID,
+			Date: date,
+			Time: time,
+			Gp:   gps[gp_id-1],
+		}
+
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		races = append(races, newRace)
+	}
+
+	return races, nil
 }
 
 func (m *sqliteDBRepo) CreateTeamTable() error {
