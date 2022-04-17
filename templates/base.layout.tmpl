@@ -9,7 +9,8 @@
         <link rel="icon" type="image/png" href="/static/images/favicon.png">
         <title>Serserilig F1 League</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+              crossorigin="anonymous">
 
         {{block "css" .}}
 
@@ -17,7 +18,7 @@
 
         <style>
             nav {
-                box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
             }
 
             @font-face {
@@ -53,17 +54,26 @@
                     <li class="nav-item"><a class="nav-link" href="/grid" id="nav-grid">Grid</a></li>
                     <li class="nav-item"><a class="nav-link" href="/calendar" id="nav-grid">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link disabled" href="#">Race Results (Coming Soon)</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/rules" id="nav-rules">Rules</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/staff" id="nav-staff">Staff</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://discord.gg/mphyhuNbYs" target="_blank" style="color: #5865f2">
-                            <b>Discord</b>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="extra" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Extra
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://www.twitch.tv/serserilig_f1" target="_blank" style="color: #a970ff">
-                            <b>Stream</b>
-                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="extra">
+                            <li class="nav-item"><a class="nav-link" href="/rules" id="nav-rules">Rules</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/staff" id="nav-staff">Staff</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://discord.gg/mphyhuNbYs" target="_blank" style="color: #5865f2">
+                                    <b>Discord</b>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://www.twitch.tv/serserilig_f1" target="_blank"
+                                   style="color: #a970ff">
+                                    <b>Stream</b>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -82,14 +92,13 @@
             crossorigin="anonymous"></script>
 
 
-
     <script>
         function activateNav(navId) {
             let navItem = document.getElementById(navId);
             navItem.classList.add('active');
         }
     </script>
-    
+
     {{block "js" .}}
 
     {{end}}
