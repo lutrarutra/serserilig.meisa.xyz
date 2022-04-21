@@ -12,6 +12,9 @@ import (
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/repository/dbrepo"
 )
 
+// Main handlers file
+
+
 // Repo the repository used by the handlers
 var Repo *Repository
 var templateData = &models.TemplateData{}
@@ -35,7 +38,7 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
-func (m *Repository) UpdateCalendarJSON() {
+func (m *Repository) updateCalendarJSON() {
 	races, err := m.DB.QueryAllRaces()
 	if err != nil {
 		log.Fatal(err)
@@ -52,7 +55,7 @@ func (m *Repository) UpdateCalendarJSON() {
 	}
 }
 
-func (m *Repository) UpdateDriverJSON() {
+func (m *Repository) updateDriverJSON() {
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
 		log.Fatal(err)
@@ -69,7 +72,7 @@ func (m *Repository) UpdateDriverJSON() {
 	}
 }
 
-func (m *Repository) UpdateTeamJSON() {
+func (m *Repository) updateTeamJSON() {
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
 		log.Fatal(err)

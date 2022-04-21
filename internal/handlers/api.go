@@ -69,7 +69,7 @@ func (m *Repository) AddRace(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	m.UpdateCalendarJSON()
+	m.updateCalendarJSON()
 	w.Write([]byte("Added Race"))
 	log.Println("Added Race")
 }
@@ -98,7 +98,7 @@ func (m *Repository) DeleteRace(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	m.UpdateCalendarJSON()
+	m.updateCalendarJSON()
 	w.Write([]byte("Deleted Race"))
 	log.Println("Deleted Race")
 }
@@ -137,7 +137,7 @@ func (m *Repository) UpdateRace(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(fmt.Sprint(err)))
 	}
 
-	m.UpdateCalendarJSON()
+	m.updateCalendarJSON()
 	log.Println("Race Updated!")
 }
 
@@ -181,7 +181,7 @@ func (m *Repository) AddDriver(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	m.UpdateDriverJSON()
+	m.updateDriverJSON()
 	w.Write([]byte("Added Driver"))
 }
 
@@ -209,8 +209,8 @@ func (m *Repository) DeleteDriver(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	m.UpdateDriverJSON()
-	m.UpdateTeamJSON()
+	m.updateDriverJSON()
+	m.updateTeamJSON()
 	w.Write([]byte("Deleted Driver"))
 }
 
@@ -284,7 +284,7 @@ func (m *Repository) UpdateDriver(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					w.Write([]byte(fmt.Sprint(err)))
 				}
-				m.UpdateDriverJSON()
+				m.updateDriverJSON()
 				return
 			}
 			w.Write([]byte(fmt.Sprintf("Invalid %v", col)))
@@ -341,7 +341,7 @@ func (m *Repository) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					w.Write([]byte(fmt.Sprint(err)))
 				}
-				m.UpdateTeamJSON()
+				m.updateTeamJSON()
 				return
 			}
 			w.Write([]byte(fmt.Sprintf("Invalid %v", col)))
