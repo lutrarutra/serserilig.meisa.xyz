@@ -37,6 +37,7 @@ func main() {
 	}
 	log.Println("Connected to DB")
 
+	// Templates
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
@@ -49,6 +50,7 @@ func main() {
 	handlers.NewHandlers(repo)
 	render.NewRenderer(&app)
 
+	// Serve
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 
 	srv := &http.Server{
