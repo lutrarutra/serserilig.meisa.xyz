@@ -48,6 +48,7 @@ func main() {
 
 	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
+	repo.BuildTables()
 	render.NewRenderer(&app)
 
 	// Serve
