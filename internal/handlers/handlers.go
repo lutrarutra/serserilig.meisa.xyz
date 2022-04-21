@@ -38,6 +38,25 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
+func(m *Repository) BuildTables() {
+	err := m.DB.CreateDriverTable()
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = m.DB.CreateTeamTable()
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = m.DB.CreateCalendarTable()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	m.updateDriverJSON()
+	m.updateTeamJSON()
+	m.updateCalendarJSON()
+}
+
 func (m *Repository) updateCalendarJSON() {
 	races, err := m.DB.QueryAllRaces()
 	if err != nil {

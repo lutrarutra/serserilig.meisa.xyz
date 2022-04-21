@@ -2,52 +2,52 @@
   "ferrari": {
     "name": "Ferrari",
     "abbr": "fer",
-    "points": 78,
+    "points": 0,
     "driverIDs": ["0", "1"],
     "color": "#f91536"
   },
   "mercedes": {
     "name": "Mercedes",
     "abbr": "mer",
-    "points": 38,
+    "points": 0,
     "driverIDs": ["3", "4"],
     "color": "#6cd3bf"
   },
   "red-bull-racing": {
     "name": "Red Bull Racing",
     "abbr": "rbr",
-    "points": 37,
+    "points": 0,
     "driverIDs": ["2", "5"],
     "color": "#3671c6"
   },
   "alpine": {
     "name": "Alpine",
     "abbr": "alp",
-    "points": 16,
+    "points": 0,
     "color": "#2293d1"
   },
   "haas-f1-team": {
     "name": "Haas F1 Team",
     "abbr": "haas",
-    "points": 12,
+    "points": 0,
     "color": "#b6babd"
   },
   "alfa-romeo": {
     "name": "Alfa Romeo",
     "abbr": "alf",
-    "points": 9,
+    "points": 0,
     "color": "#c92d4b"
   },
   "alphatauri": {
     "name": "AlphaTauri",
     "abbr": "at",
-    "points": 8,
+    "points": 0,
     "color": "#5e8faa"
   },
   "mclaren": {
     "name": "McLaren",
     "abbr": "mcl",
-    "points": 6,
+    "points": 0,
     "color": "#f58020"
   },
   "aston-martin": {

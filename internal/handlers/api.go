@@ -142,7 +142,7 @@ func (m *Repository) UpdateRace(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) GetAllRaces(w http.ResponseWriter, r *http.Request) {
-	m.DB.CreateCalendarTable()
+	//m.DB.CreateCalendarTable()
 
 	races, err := m.DB.QueryAllRaces()
 	if err != nil {
@@ -215,7 +215,7 @@ func (m *Repository) DeleteDriver(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) GetDriver(w http.ResponseWriter, r *http.Request) {
-	m.DB.CreateDriverTable()
+	//m.DB.CreateDriverTable()
 
 	var driverJSON []byte
 
@@ -295,7 +295,7 @@ func (m *Repository) UpdateDriver(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) GetAllDrivers(w http.ResponseWriter, r *http.Request) {
-	m.DB.CreateDriverTable()
+	//m.DB.CreateDriverTable()
 
 	drivers, err := m.DB.QueryAllDrivers()
 	if err != nil {
@@ -352,7 +352,7 @@ func (m *Repository) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) GetAllTeams(w http.ResponseWriter, r *http.Request) {
-	m.DB.CreateTeamTable()
+	//m.DB.CreateTeamTable()
 
 	teams, err := m.DB.QueryAllTeams()
 	if err != nil {
