@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
@@ -24,6 +25,17 @@ func (m *sqliteDBRepo) CreateDriverTable() error {
 
 func (m *sqliteDBRepo) CreateCalendarTable() error {
 	statement := `create table if not exists races (id integer primary key not null, gp_id integer, race_date TEXT, race_time TEXT)`
+
+	_, err := m.DB.Exec(statement)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) CreateStaffTable() error {
+	statement := `create table if not exists staff (id integer primary key not null, name TEXT, role_id integer, title TEXT, image_path TEXT)`
 
 	_, err := m.DB.Exec(statement)
 	if err != nil {
@@ -97,6 +109,168 @@ func (m *sqliteDBRepo) UpdateRace(id, date, race_time string) error {
 	// 	log.Println("Error updating race time")
 	// 	return err
 	// }
+
+	return nil
+}
+
+func (m *sqliteDBRepo) QueryStaff(id string) (models.Staff, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var staff models.Staff
+
+	statement := fmt.Sprintf(`select * from staff where ID='%v'`, id)
+
+	rows, err := m.DB.QueryContext(ctx, statement)
+	if err != nil {
+		return staff, err
+	}
+	//id integer primary key not null, name TEXT, role_id integer, title TEXT, image_path TEXT
+
+	var roles []models.Role
+
+	rawFile, err := ioutil.ReadFile("./static/json/role_reference.json")
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = json.Unmarshal(rawFile, &roles)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	for rows.Next() {
+		var ID int
+		var name string
+		var role_id int
+		var title string
+		var image_path string
+
+		err = rows.Scan(&ID, &name, &role_id, &title, &image_path)
+
+		staff = models.Staff{
+			ID:        ID,
+			Name:      name,
+			Role:      roles[role_id-1],
+			Title:     title,
+			ImagePath: image_path,
+		}
+
+		if err != nil {
+			log.Println(err)
+			continue
+		} else {
+			return staff, nil
+		}
+	}
+
+	return staff, nil
+}
+
+func (m *sqliteDBRepo) QueryAllStaff() ([]models.Staff, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := `select * from staff`
+
+	rows, err := m.DB.QueryContext(ctx, statement)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var staff []models.Staff
+	var roles []models.Role
+
+	rawFile, err := ioutil.ReadFile("./static/json/role_reference.json")
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = json.Unmarshal(rawFile, &roles)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	for rows.Next() {
+		var ID int
+		var name string
+		var role_id int
+		var title string
+		var image_path string
+
+		err = rows.Scan(&ID, &name, &role_id, &title, &image_path)
+
+		newStaff := models.Staff{
+			ID:        ID,
+			Name:      name,
+			Role:      roles[role_id-1],
+			Title:     title,
+			ImagePath: image_path,
+		}
+
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		staff = append(staff, newStaff)
+	}
+
+	return staff, nil
+}
+
+func (m *sqliteDBRepo) InsertStaff(staff models.Staff) error {
+	err := m.CreateStaffTable()
+	if err != nil {
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	// (id integer primary key not null, name TEXT, role_id integer, title TEXT, image_path TEXT)`
+
+	statement := `insert into staff (name, role_id, title, image_path) values ($1, $2, $3, $4)`
+
+	_, err = m.DB.ExecContext(ctx, statement, staff.Name, staff.Role.ID, staff.Title, staff.ImagePath)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) UpdateStaff(id, name, title, role string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	//  id integer primary key not null, name TEXT, role_id integer, title TEXT, image_path TEXT
+	// `update races set race_date=$1, race_time=$2 where ID=$3`
+	role_id, _ := strconv.Atoi(role)
+	statement := `update staff set name=$1, role_id=$2, title=$3 where ID=$4`
+	_, err := m.DB.ExecContext(ctx, statement, name, role_id, title, id)
+
+	if err != nil {
+		log.Println("Updating staff failed")
+		return err
+	}
+
+	return nil
+}
+
+func (m *sqliteDBRepo) DeleteStaff(staffId string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := fmt.Sprintf(`delete from staff where id=%v`, staffId)
+
+	_, err := m.DB.ExecContext(ctx, statement)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -1,114 +1,46 @@
 {{template "base" .}}
 
+
 {{define "content"}}
+
+{{ $roles := .Roles }}
+{{ $allStaff := .Staff }}
+
     <div class="container">
-        <div class="row">
-            <div class="stenns">
-                <img src="https://cdn.discordapp.com/avatars/184334501885771776/95a9b90819dc52278638b4573144c461.webp"
-                     alt="">
-            </div>
-            <h1>Stenns</h1>
-            <h5>Commissioner</h5>
-        </div>
-
+        {{range $role := $roles}}
         <div class="hr-divider">
-            <hr>
-            <span>MINIONS</span>
-        </div>
+            {{if eq $role.ID 1}}
+            {{else}}
+                <hr>
+                <span>{{$role.Name}}</span>
+            {{end}}
+            <div class="row justify-content-center pt-3">
+                {{range $staff := $allStaff}}
+                {{if eq $staff.Role.ID $role.ID}}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="col avatar">
+                        <img src="{{$staff.ImagePath}}">
+                    </div>
+                    <h2>{{$staff.Name}}</h2>
+                    {{if eq $role.ID 1}}
+                    <h5>{{$role.Name}}</h5>
+                    {{end}}
+                    <p>{{$staff.Title}}</p>
+                </div>
+                {{end}}
+                {{end}}
+            </div>
 
-        <div class="row mt-4">
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/502170186187538442/bc73a648f0c0ea9b33400ad053473470.webp"
-                         alt="">
-                </div>
-                <h2>Mr Black Cat</h2>
-                <p>Head of Media</p>
-                <p>Commentator</p>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/353960679973191701/ec52ff3f063e38ce5fe6dd162c6221ae.webp"
-                         alt="">
-                </div>
-                <h2>Meisa</h2>
-                <p>Web and App Developer</p>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/432278819064512522/1dc792912ca2bbed1f82965c30264f2e.webp"
-                         alt="">
-                </div>
-                <h2>Damian294</h2>
-                <p>Discord Administration</p>
-                <p>Recruitment Officer</p>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/310757563027423232/59b6bd281f95ae930c4d27834eb30c7c.webp"
-                         alt="">
-                </div>
-                <h2>Badu</h2>
-                <p>Discord Administration</p>
-            </div>
         </div>
-
-        <div class="hr-divider">
-            <hr>
-            <span>STEWARDS</span>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/184334501885771776/95a9b90819dc52278638b4573144c461.webp"
-                         alt="">
-                </div>
-                <h2>Stenns</h2>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/326369840778706946/a_75a8b05d190791a4814d0a73979533ba.webp"
-                         alt="">
-                </div>
-                <h2>4LB</h2>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/273157664031113218/7168810489461ccec19a36dfdbbdd471.webp"
-                         alt="">
-                </div>
-                <h2>FURYY</h2>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/299259148657229834/2fc709cca4d36181bd1af041d8bc68d4.webp"
-                         alt="">
-                </div>
-                <h2>kawhiitheclaw2</h2>
-            </div>
-            <div class="col">
-                <div class="avatar">
-                    <img src="https://cdn.discordapp.com/avatars/563779938348695572/baf2fcaa97ed10d5309797157719cb8b.webp"
-                         alt="">
-                </div>
-                <h2>Jarmin Jarv</h2>
-            </div>
-        </div>
+        {{end}}
     </div>
 {{end}}
 
 {{define "css"}}
     <style>
-        .stenns img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-        }
-
         .avatar img {
-            width: 100px;
-            height: 100px;
+            width: 128px;
+            height: 128px;
             border-radius: 50%;
         }
 

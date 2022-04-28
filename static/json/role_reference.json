@@ -1,0 +1,14 @@
+[
+    {
+        "id":1,
+        "name": "Commissioner"
+    },
+    {
+        "id":2,
+        "name": "Stewards"
+    },
+    {
+        "id":3,
+        "name": "Minions"
+    }
+]

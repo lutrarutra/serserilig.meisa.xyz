@@ -3,4 +3,7 @@ db/
 static/json/drivers.json
 static/json/teams.json
 static/json/calendar.json
+static/json/staff.json
+static/images/temp/
+static/images/profile_pics/
 .DS_Store

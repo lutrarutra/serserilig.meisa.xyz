@@ -42,3 +42,16 @@ type Race struct {
 	Time    string       `json:"time"`
 	Results []RaceResult `json:"results"`
 }
+
+type Staff struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Role      Role   `json:"role"` // Reference to /static/json/role_reference.json
+	Title     string `json:"title"`
+	ImagePath string `json:"image_path"`
+}
+
+type Role struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}

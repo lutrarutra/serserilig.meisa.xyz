@@ -3,14 +3,16 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/funcs"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
-	"github.com/iMeisa/serserilig.meisa.xyz/internal/network"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/config"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/funcs"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/models"
+	"github.com/iMeisa/serserilig.meisa.xyz/internal/network"
+	"github.com/justinas/nosurf"
 )
 
 var functions = funcs.Functions
@@ -32,6 +34,7 @@ func AddDefaultData(data *models.TemplateData, r *http.Request) *models.Template
 	stringMap["remote_ip"] = network.GetRealIP(r)
 
 	data.StringMap = stringMap
+	data.CSRFToken = nosurf.Token(r)
 	return data
 }
 

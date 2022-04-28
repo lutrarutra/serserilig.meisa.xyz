@@ -17,6 +17,8 @@ type TemplateData struct {
 	Teams     []Team
 	Races     []Race
 	GPs       []GrandPrix
+	Roles     []Role
+	Staff     []Staff
 	CSRFToken string
 	Flash     string // Some message
 	Warning   string
@@ -40,6 +42,36 @@ func (data *TemplateData) GetRaces() {
 	})
 
 	data.Races = races
+}
+
+func (data *TemplateData) GetRoles() {
+	var roles []Role
+	rawFile, err := ioutil.ReadFile("./static/json/role_reference.json")
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = json.Unmarshal(rawFile, &roles)
+	if err != nil {
+		log.Println(err)
+	}
+
+	data.Roles = roles
+}
+
+func (data *TemplateData) GetStaff() {
+	var staff []Staff
+	rawFile, err := ioutil.ReadFile("./static/json/staff.json")
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = json.Unmarshal(rawFile, &staff)
+	if err != nil {
+		log.Println(err)
+	}
+
+	data.Staff = staff
 }
 
 func (data *TemplateData) GetGrandPrixes() {

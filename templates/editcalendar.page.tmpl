@@ -42,7 +42,7 @@
     <div class="alert bg-success mt-4" id="saved-alert" hidden>Saved!</div>
     <div class="row justify-content-between">
         <div class="col-5 align-self-center">
-            <select class="form-control form-control" id="gp-select">
+            <select class="form-control" id="gp-select">
                 {{range .GPs}}
                 <option value="{{.ID}}">
                     {{.Country}} - {{.Circuit}}
@@ -89,8 +89,7 @@
         const gp_input = document.getElementById('gp-select');
         const date_input = document.getElementById('date-select');
         const time_input = document.getElementById('time-select');
-        console.log(date_input.value);
-        console.log(time_input.value);
+
         const url = '/api/races/add?gp_id=' + gp_input.value + '&date=' + date_input.value + '&time=' + time_input.value +  '&ip=' + user_ip;
         fetch(url).then(function(response) {
             // console.log(response)
@@ -113,7 +112,7 @@
             }).then((data) => {
             console.log(data)
         })
-        setTimeout(() => {location.reload()}, 1000);
+        // setTimeout(() => {location.reload()}, 1000);
     }
 
     function updateRace(id) {

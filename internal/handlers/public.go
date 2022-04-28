@@ -52,6 +52,9 @@ func (m *Repository) Rules(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Staff(w http.ResponseWriter, r *http.Request) {
+	templateData.GetStaff()
+	templateData.GetRoles()
+
 	render.Template(w, r, "staff.page.tmpl", templateData)
 }
 

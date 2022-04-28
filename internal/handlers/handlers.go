@@ -14,7 +14,6 @@ import (
 
 // Main handlers file
 
-
 // Repo the repository used by the handlers
 var Repo *Repository
 var templateData = &models.TemplateData{}
@@ -38,7 +37,7 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
-func(m *Repository) BuildTables() {
+func (m *Repository) BuildTables() {
 	err := m.DB.CreateDriverTable()
 	if err != nil {
 		log.Fatal(err)
@@ -51,10 +50,15 @@ func(m *Repository) BuildTables() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	err = m.DB.CreateStaffTable()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	m.updateDriverJSON()
 	m.updateTeamJSON()
 	m.updateCalendarJSON()
+	m.updateStaffJSON()
 }
 
 func (m *Repository) updateCalendarJSON() {
@@ -69,6 +73,23 @@ func (m *Repository) updateCalendarJSON() {
 	}
 
 	err = ioutil.WriteFile("./static/json/calendar.json", calendarJSON, 0644)
+	if err != nil {
+		log.Println("Could not write to file")
+	}
+}
+
+func (m *Repository) updateStaffJSON() {
+	staff, err := m.DB.QueryAllStaff()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	staffJSON, err := json.MarshalIndent(staff, "", "	")
+	if err != nil {
+		log.Fatal("Could not convert to JSON:", err)
+	}
+
+	err = ioutil.WriteFile("./static/json/staff.json", staffJSON, 0644)
 	if err != nil {
 		log.Println("Could not write to file")
 	}

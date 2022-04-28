@@ -1,0 +1,267 @@
+{{template "admin" .}}
+
+
+
+{{define "content"}}
+
+{{ $roles := .Roles }}
+{{ $allStaff := .Staff }}
+
+
+<div class="container">
+    <div class="popup bg-white" id="cropup">
+        <img class="" id="target_image" src="" alt="">
+        <div class="row py-3 justify-content-start">
+            <div class="pb-3">
+                <button class="btn btn-primary" onclick="submitCrop()">Submit</button>
+            </div>
+            <div class="">
+                <button class="btn btn-danger" onclick="cancelCrop()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <form class="pb-5" enctype="multipart/form-data" method="post" action="/api/staff/add">
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        <input type="hidden" name="crop_x" id="crop_x" value="">
+        <input type="hidden" name="crop_y" id="crop_y" value="">
+        <input type="hidden" name="crop_w" id="crop_w" value="">
+        <input type="hidden" name="crop_h" id="crop_h" value="">
+        <input type="hidden" name="img_w" id="img_w" value="">
+        <input type="hidden" name="img_h" id="img_h" value="">
+        <div class="row pb-3">
+            <div class="col form-group align-self-center">
+                <label for="role_field" class="w-100" style="text-align: left;">Role</label>
+                <select class="form-control" name="role_field" id="role_field">
+                    {{range $role := $roles}}
+                    <option value="{{$role.ID}}">{{$role.Name}}</option>
+                    {{end}}
+                </select>
+            </div>
+            <div class="col form-group align-self-center">
+                <label for="title_field" class="w-100" style="text-align: left;">Title</label>
+                <input type="text" class="form-control" name="title_field" id="title_field" placeholder="Title">
+            </div>
+        </div>
+
+        <div class="row pb-3">
+            <div class="col form-group align-self-center">
+                <label for="name_field" class="w-100" style="text-align: left;">Name</label>
+                <input type="text" class="form-control" name="name_field" id="name_field" placeholder="Name">
+            </div>
+            <div class="col form-group align-self-center">
+                <label for="image_field" class="w-100" style="text-align: left;">Profile Picture</label>
+                <input type="file" class="form-control-file  w-100" name="picture" id="image_field" accept=".png,.jpeg,.jpg" onchange="showUpload(this);">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" value="upload">Add Staff Member</button>
+    </form>
+
+    <div class="alert bg-success mt-4" id="saved-alert" hidden>Saved!</div>
+
+    <div class="row pb-2">
+        <div class="col-1"></div>
+        <div class="col-3">
+            <label class="w-100" style="text-align: left;">Name</label>
+        </div>
+        <div class="col-3">
+            <label class="w-100" style="text-align: left;">Role</label>
+        </div>
+        <div class="col-3">
+            <label class="w-100" style="text-align: left;">Title</label>
+        </div>
+        <div class="col-1">
+            <label class="w-100" style="text-align: left;">Picture</label>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    {{range $staff := $allStaff}}
+    <div class="row pb-3">
+        <div class="col-1 align-self-center">
+            <button class="btn btn-danger" onclick="deleteStaff('{{$staff.ID}}')">Delete</button>
+        </div>
+        <div class="col-3 align-self-center">
+            <input class="form-control" type="text" id="name-input-{{$staff.ID}}" name='from' size='9' value="{{$staff.Name}}" />
+        </div>
+        <div class="col-3 align-self-center">
+            <select class="form-control" id="role-input-{{$staff.ID}}">
+                {{range $index, $role := $roles}}
+                {{ if eq $staff.Role.ID $role.ID}}
+                <option value="{{$role.ID}}" selected>{{$role.Name}}</option>
+                {{else}}
+                <option value="{{$role.ID}}">{{$role.Name}}</option>
+                {{end}}
+                {{end}}
+            </select>
+        </div>
+        <div class="col-3 align-self-center">
+            <input class="form-control" type="text" id="title-input-{{$staff.ID}}" name='from' size='9' value="{{$staff.Title}}" />
+        </div>
+        <div class="col-1 align-self-center">
+            <img src="{{$staff.ImagePath}}" style="width: 64px; height: 64px;">
+        </div>
+        <div class="col-1">
+            <button class="btn btn-primary" onclick="updateStaff('{{$staff.ID}}')">Update</button>
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}
+
+{{define "css"}}
+<style>
+    .popup {
+        position: absolute;
+        visibility: hidden;
+        display: inline-block;
+        left: 10vw;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+</style>
+{{end}}
+
+{{define "js"}}
+<link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
+<script src="https://unpkg.com/jcrop"></script>
+<script>
+
+    var jcp = null;
+    const widget = Jcrop.Widget.create();
+
+    function showUpload(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            const cropup = document.getElementById('cropup');
+            const target_image = document.getElementById('target_image');
+
+            reader.onload = function (e) {
+                cropup.style.visibility = "visible";
+                target_image.src = e.target.result;
+                // target_image.style.width = "80vw";
+                target_image.parentElement.style
+                target_image.style.left = "0";
+                target_image.style.zIndex = "1";
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+            Jcrop.load(target_image).then(img => {
+                jcp = Jcrop.attach(img,{aspectRatio: 1});
+                r = jcp.el.getBoundingClientRect()
+                const w = Math.min(256, Math.min(r.width, r.height))
+                const rect = Jcrop.Rect.fromPoints([0,0],[w,w]);
+                jcp.newWidget(rect.scale(1,1).center(r.width, r.height));
+                jcp.focus();
+            });
+        }
+    }
+
+
+    function submitCrop() {
+        const target_image = document.getElementById('target_image');
+        console.log(jcp.active.pos);
+        const cropup = document.getElementById('cropup');
+        
+        const x_input = document.getElementById('crop_x');
+        const y_input = document.getElementById('crop_y');
+        const w_input = document.getElementById('crop_w');
+        const h_input = document.getElementById('crop_h');
+        const iw_input = document.getElementById('img_w');
+        const ih_input = document.getElementById('img_h');
+
+        r = target_image.getBoundingClientRect()
+        console.log(r)
+        
+        x_input.value = Math.floor(jcp.active.pos.x);
+        y_input.value = Math.floor(jcp.active.pos.y);
+        w_input.value = Math.floor(jcp.active.pos.w);
+        h_input.value = Math.floor(jcp.active.pos.h);
+        iw_input.value = Math.floor(r.width);
+        ih_input.value = Math.floor(r.height);
+        
+        target_image.src = "";
+        cropup.style.visibility = "hidden";
+        jcp.destroy();
+    }
+
+    function cancelCrop() {
+        let file_input = document.getElementById('image_field');
+        file_input.value = "";
+        target_image.src = "";
+        cropup.style.visibility = "hidden";
+        jcp.destroy();
+    }
+
+    function addStaff() {
+        let formData = new FormData();
+        let file_input = document.getElementById('image_field');
+        formData.append("file", file_input[0]);
+        const user_ip = '{{index .StringMap "remote_ip"}}';
+        const role_input = document.getElementById('role_field');
+        const title_input = document.getElementById('title_field');
+        const name_input = document.getElementById('name_field');
+        // console.log(role_input.value)
+
+        const url = '/api/staff/add?name=' + name_input.value + '&title=' + title_input.value + '&role=' + role_input.value + '&ip=' + user_ip;
+
+        // fetch(url).then(function(response) {
+        //     // console.log(response)
+        //     return response;
+        // }).then(function(data) {
+        //     // console.log(data);
+        // });
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onload = function () {
+            console.log("Message from backend", xhr.response);
+        };
+
+        xhr.open("POST", url, true);
+        xhr.send(formData);
+
+        document.getElementById('saved-alert').removeAttribute('hidden');
+
+        // setTimeout(() => {location.reload()}, 1000);
+    }
+
+    function deleteStaff(id) {
+        // document.getElementById('delete-success').removeAttribute('hidden')
+        const user_ip = '{{index .StringMap "remote_ip"}}'
+        const del_url = '/api/staff/delete?id=' + id + '&ip=' + user_ip
+        fetch(del_url)
+            .then((response) => {
+                return response
+            }).then((data) => {
+            // console.log(data)
+        });
+        setTimeout(() => {location.reload()}, 1000);
+    }
+
+    function updateStaff(id) {
+        const user_ip = '{{index .StringMap "remote_ip"}}'
+        const role_input = document.getElementById('role-input-' + id);
+        const title_input = document.getElementById('title-input-' + id);
+        const name_input = document.getElementById('name-input-' + id);
+
+        const url = '/api/staff/update?id=' + id + '&name=' + name_input.value + '&title=' + title_input.value + '&role=' + role_input.value + '&ip=' + user_ip;
+        fetch(url).then(function(response) {
+            // console.log(response)
+            return response;
+        }).then(function(data) {
+            // console.log(data);
+        })
+
+        document.getElementById('saved-alert').removeAttribute('hidden');
+
+        setTimeout(() => {location.reload()}, 1000);
+    }
+</script>
+
+{{end}}
